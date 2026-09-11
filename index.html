@@ -2,24 +2,33 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoSound Studio V5 - Engenharia & Links Diretos</title>
-    <!-- Font Awesome Icons & Google Fonts -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AutoSound Mobile Studio - Engenharia de Som Automotivo</title>
+    
+    <!-- Meta tags para PWA e Mobile -->
+    <meta name="theme-color" content="#07090e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AutoSound">
+    
+    <!-- Web App Manifest Embutido via Data URI -->
+    <link rel="manifest" href='data:application/manifest+json,{"name":"AutoSound Studio Pro","short_name":"AutoSound","start_url":".","display":"standalone","background_color":"#07090e","theme_color":"#07090e","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/3204/3204062.png","sizes":"512x512","type":"image/png"}]}'>
+
+    <!-- Fontes e Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --bg-dark: #07090e;
-            --panel-bg: rgba(15, 18, 26, 0.94);
+            --panel-bg: rgba(15, 18, 26, 0.95);
             --panel-border: #1e2536;
             --accent-orange: #ff5500;
             --accent-orange-glow: rgba(255, 85, 0, 0.35);
             --accent-cyan: #00f0ff;
-            --accent-cyan-glow: rgba(0, 240, 255, 0.25);
             --accent-green: #00ff88;
             --accent-red: #ff2a5f;
             --accent-purple: #ab47bc;
-            --accent-yellow: #ffb300;
             --text-main: #f0f4f8;
             --text-muted: #8290a0;
             --card-inner: #0f131d;
@@ -29,19 +38,19 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             background-color: var(--bg-dark);
             background-image: 
                 radial-gradient(circle at 10% 10%, rgba(255, 85, 0, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 90%, rgba(0, 240, 255, 0.06) 0%, transparent 40%),
-                linear-gradient(to bottom, rgba(7, 9, 14, 0.95), rgba(7, 9, 14, 0.98));
+                radial-gradient(circle at 90% 90%, rgba(0, 240, 255, 0.06) 0%, transparent 40%);
             background-attachment: fixed;
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
             min-height: 100vh;
-            padding-bottom: 50px;
+            padding-bottom: 30px;
         }
 
         h1, h2, h3, h4, .tech-font {
@@ -54,116 +63,116 @@
             font-family: 'Orbitron', sans-serif;
         }
 
+        /* Header Responsivo */
         header {
             background: rgba(10, 13, 20, 0.95);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--panel-border);
-            padding: 16px 30px;
+            padding: 12px 20px;
             position: sticky;
             top: 0;
             z-index: 100;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .brand {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 10px;
         }
 
         .brand i {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             color: var(--accent-orange);
-            filter: drop-shadow(0 0 10px var(--accent-orange-glow));
+            filter: drop-shadow(0 0 8px var(--accent-orange-glow));
         }
 
         .brand h1 {
-            font-size: 1.7rem;
+            font-size: 1.4rem;
             font-weight: 900;
             color: #fff;
-            line-height: 1.1;
         }
 
-        .brand h1 span {
-            color: var(--accent-orange);
-        }
+        .brand h1 span { color: var(--accent-orange); }
 
-        .badge-v5 {
-            background: linear-gradient(135deg, var(--accent-orange), #00f0ff);
+        .btn-install {
+            background: linear-gradient(135deg, var(--accent-cyan), #00a8ff);
             color: #000;
-            font-size: 0.65rem;
-            font-weight: 900;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: 1.5px;
+            font-weight: 800;
+            font-size: 0.75rem;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Rajdhani', sans-serif;
         }
 
+        /* Grid da Aplicação Fluida */
         .workspace {
             max-width: 1800px;
-            margin: 25px auto;
-            padding: 0 20px;
+            margin: 15px auto;
+            padding: 0 15px;
             display: grid;
-            grid-template-columns: 440px 1fr 420px;
-            gap: 22px;
+            grid-template-columns: 420px 1fr 380px;
+            gap: 18px;
         }
 
-        @media (max-width: 1600px) {
+        @media (max-width: 1400px) {
             .workspace {
-                grid-template-columns: 400px 1fr;
+                grid-template-columns: 380px 1fr;
             }
-            .catalog-panel {
-                grid-column: 1 / -1;
-            }
+            .catalog-panel { grid-column: 1 / -1; }
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 992px) {
             .workspace {
                 grid-template-columns: 1fr;
             }
+            header {
+                padding: 10px 15px;
+            }
+            .brand h1 { font-size: 1.2rem; }
         }
 
+        /* Painéis e Formulários */
         .panel {
             background: var(--panel-bg);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(16px);
             border: 1px solid var(--panel-border);
-            border-radius: 14px;
-            padding: 22px;
-            box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 14px;
         }
 
         .panel-header {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             border-bottom: 1px solid var(--panel-border);
-            padding-bottom: 12px;
+            padding-bottom: 10px;
         }
 
-        .panel-header i {
-            color: var(--accent-orange);
-            font-size: 1.25rem;
-        }
-
-        .panel-header h2 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #fff;
-        }
+        .panel-header i { color: var(--accent-orange); font-size: 1.1rem; }
+        .panel-header h2 { font-size: 1.15rem; font-weight: 700; color: #fff; }
 
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px;
         }
 
         .form-group label {
-            font-size: 0.82rem;
+            font-size: 0.78rem;
             color: var(--text-muted);
             font-weight: 700;
             text-transform: uppercase;
@@ -173,133 +182,74 @@
             background: var(--card-inner);
             border: 1px solid var(--panel-border);
             color: var(--text-main);
-            padding: 10px 14px;
+            padding: 10px;
             border-radius: 8px;
-            font-size: 0.92rem;
-            transition: all 0.2s ease;
+            font-size: 0.9rem;
         }
 
         .form-control:focus {
             outline: none;
             border-color: var(--accent-orange);
-            box-shadow: 0 0 12px var(--accent-orange-glow);
         }
 
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 8px;
         }
 
         .preset-buttons {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 10px;
+            gap: 6px;
         }
 
         .btn-preset {
             background: var(--card-inner);
             border: 1px solid var(--panel-border);
             color: var(--text-main);
-            padding: 8px;
+            padding: 8px 4px;
             border-radius: 6px;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s;
             text-align: center;
         }
 
-        .btn-preset:hover {
-            border-color: var(--accent-cyan);
-            color: var(--accent-cyan);
-        }
+        .btn-preset:active { border-color: var(--accent-cyan); color: var(--accent-cyan); }
 
         .btn {
-            padding: 12px 18px;
+            padding: 12px;
             border-radius: 8px;
             border: none;
             font-weight: 700;
             font-family: 'Rajdhani', sans-serif;
-            font-size: 1.05rem;
+            font-size: 1rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: all 0.25s ease;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--accent-orange), #d44400);
             color: #fff;
-            box-shadow: 0 4px 18px var(--accent-orange-glow);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 24px rgba(255, 85, 0, 0.5);
-        }
-
-        .channel-card {
-            background: var(--card-inner);
-            border: 1px solid var(--panel-border);
-            border-radius: 10px;
-            padding: 14px;
-            margin-bottom: 12px;
-        }
-
-        .channel-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .channel-title {
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: var(--accent-cyan);
-        }
-
-        .channel-mode-badge {
-            font-size: 0.7rem;
-            padding: 2px 8px;
-            border-radius: 4px;
-            background: rgba(0, 240, 255, 0.1);
-            color: var(--accent-cyan);
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            font-weight: 700;
-        }
-
-        .channel-speaker-item {
-            font-size: 0.85rem;
-            color: var(--text-main);
-            padding: 6px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px dashed rgba(255,255,255,0.05);
-        }
-
-        .channel-speaker-item:last-child {
-            border-bottom: none;
-        }
-
+        /* Indicadores Métricos */
         .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 10px;
         }
 
         .metric-card {
             background: var(--card-inner);
             border: 1px solid var(--panel-border);
-            border-radius: 10px;
-            padding: 14px 10px;
+            border-radius: 8px;
+            padding: 10px 8px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -308,247 +258,192 @@
         .metric-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
+            top: 0; left: 0; width: 100%; height: 3px;
             background: var(--accent-orange);
         }
 
         .metric-card.cyan::before { background: var(--accent-cyan); }
         .metric-card.green::before { background: var(--accent-green); }
-        .metric-card.purple::before { background: var(--accent-purple); }
         .metric-card.red::before { background: var(--accent-red); }
 
         .metric-val {
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.35rem;
+            font-size: 1.15rem;
             font-weight: 800;
             color: #fff;
-            margin: 4px 0;
+            margin: 2px 0;
         }
 
         .metric-lbl {
-            font-size: 0.72rem;
+            font-size: 0.65rem;
             color: var(--text-muted);
             text-transform: uppercase;
             font-weight: 700;
         }
 
+        /* Tabela Responsiva */
         .wiring-table-container {
             background: var(--card-inner);
             border: 1px solid var(--panel-border);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-top: 10px;
+            border-radius: 8px;
+            overflow-x: auto;
         }
 
         table.wiring-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.82rem;
+            font-size: 0.78rem;
             text-align: left;
+            min-width: 400px;
         }
 
         table.wiring-table th {
             background: rgba(255, 85, 0, 0.1);
             color: var(--accent-orange);
-            padding: 10px 12px;
-            font-weight: 700;
-            border-bottom: 1px solid var(--panel-border);
+            padding: 8px 10px;
         }
 
         table.wiring-table td {
-            padding: 10px 12px;
+            padding: 8px 10px;
             border-bottom: 1px solid rgba(255,255,255,0.03);
-            color: var(--text-main);
         }
 
-        table.wiring-table tr:last-child td {
-            border-bottom: none;
-        }
-
+        /* Visualizador Canvas Responsivo */
         .canvas-container {
             position: relative;
             background: #040609;
-            border-radius: 12px;
+            border-radius: 10px;
             border: 1px solid var(--panel-border);
             overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 500px;
+            width: 100%;
+            height: 380px;
         }
 
         canvas {
-            display: block;
-            width: 100%;
-            height: 100%;
+            width: 100% !important;
+            height: 100% !important;
         }
 
+        /* Produtos Clicáveis */
         .products-grid {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            max-height: 680px;
+            gap: 10px;
+            max-height: 600px;
             overflow-y: auto;
-            padding-right: 4px;
         }
 
         .product-card {
             background: var(--card-inner);
             border: 1px solid var(--panel-border);
-            border-radius: 10px;
-            padding: 14px;
+            border-radius: 8px;
+            padding: 10px;
             display: flex;
-            gap: 14px;
+            gap: 10px;
             align-items: center;
             text-decoration: none;
             color: inherit;
-            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-            position: relative;
-        }
-
-        .product-card:hover {
-            border-color: var(--accent-cyan);
-            transform: translateX(4px);
-            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.15);
         }
 
         .product-icon {
-            width: 46px;
-            height: 46px;
+            width: 38px;
+            height: 38px;
             background: rgba(255, 85, 0, 0.1);
             border: 1px solid var(--accent-orange-glow);
-            border-radius: 8px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--accent-orange);
-            font-size: 1.3rem;
             flex-shrink: 0;
-        }
-
-        .product-details {
-            flex-grow: 1;
         }
 
         .product-name {
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 0.88rem;
             color: #fff;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
-        .product-name i.fa-external-link {
-            font-size: 0.75rem;
-            color: var(--accent-cyan);
-            opacity: 0.7;
-            transition: opacity 0.2s;
-        }
-
-        .product-card:hover .product-name i.fa-external-link {
-            opacity: 1;
-        }
-
-        .product-spec {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        .product-brand-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 6px;
-        }
-
+        .product-spec { font-size: 0.72rem; color: var(--text-muted); }
+        
         .product-tag {
-            display: inline-block;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             background: rgba(0, 240, 255, 0.1);
             color: var(--accent-cyan);
             border: 1px solid rgba(0, 240, 255, 0.2);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 700;
+            padding: 1px 5px;
+            border-radius: 3px;
         }
 
-        .brand-badge {
-            font-size: 0.65rem;
-            background: rgba(255, 85, 0, 0.15);
-            color: var(--accent-orange);
-            border: 1px solid rgba(255, 85, 0, 0.3);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 700;
-        }
-
-        .alert-box {
-            background: rgba(255, 42, 95, 0.1);
-            border: 1px solid rgba(255, 42, 95, 0.3);
+        .channel-card {
+            background: var(--card-inner);
+            border: 1px solid var(--panel-border);
             border-radius: 8px;
-            padding: 10px 14px;
-            font-size: 0.8rem;
-            color: #ff7395;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 10px;
+            padding: 10px;
+            margin-bottom: 8px;
         }
 
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-dark); }
-        ::-webkit-scrollbar-thumb { background: var(--panel-border); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent-orange); }
+        .channel-card-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 6px;
+        }
+
+        .channel-speaker-item {
+            font-size: 0.78rem;
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.05);
+        }
     </style>
 </head>
 <body>
 
-    <!-- Header Navigation -->
     <header>
         <div class="brand">
             <i class="fa-solid fa-sliders"></i>
             <div>
-                <h1 class="brand-title">AUTOSOUND <span>STUDIO V5</span></h1>
+                <h1 class="brand-title">AUTOSOUND <span>MOBILE</span></h1>
             </div>
-            <span class="badge-v5">PRO EDITION + CATALOG LINKS</span>
         </div>
-        <div style="font-size: 0.85rem; color: var(--text-muted);" class="tech-font">
-            <i class="fa-solid fa-link" style="color: var(--accent-cyan); margin-right: 6px;"></i> Dimensionamento Elétrico, Esquemas & Links dos Fabricantes
-        </div>
+        <button id="installPwaBtn" class="btn-install">
+            <i class="fa-solid fa-download"></i> Instalar App
+        </button>
     </header>
 
     <div class="workspace">
         
-        <!-- LEFT PANEL -->
+        <!-- PAINEL DA ESQUERDA: CONFIGURAÇÕES -->
         <div class="panel">
             <div class="panel-header">
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
-                <h2>1. Estrutura Rápida (Presets)</h2>
+                <h2>1. Presets de Montagem</h2>
             </div>
             
             <div class="preset-buttons">
-                <div class="btn-preset" onclick="loadPreset('sq_interno')">🔊 Som Interno (Dia a Dia)</div>
-                <div class="btn-preset" onclick="loadPreset('trio_médio')">🎺 Trio Elétrico / Mala</div>
-                <div class="btn-preset" onclick="loadPreset('paredao_heavy')">🔊 Paredão / Heavy Bass</div>
+                <div class="btn-preset" onclick="loadPreset('sq_interno')">🔊 Interno</div>
+                <div class="btn-preset" onclick="loadPreset('trio_médio')">🎺 Trio Mala</div>
+                <div class="btn-preset" onclick="loadPreset('paredao_heavy')">🔊 Paredão</div>
             </div>
 
             <div class="panel-header" style="margin-top: 5px;">
                 <i class="fa-solid fa-bolt-lightning"></i>
-                <h2>2. Módulos & Fontes de Som</h2>
+                <h2>2. Central & Módulos</h2>
             </div>
 
             <div class="form-group">
-                <label>Aparelho Player / Processador</label>
+                <label>Fonte de Sinal / Player</label>
                 <select id="playerSource" class="form-control" onchange="calculateSystem()">
-                    <option value="multimidia">Central Multimídia RCA (4V Out)</option>
-                    <option value="dsp">Processador Digital de Áudio (DSP 6 Canais)</option>
-                    <option value="cd_player">CD/Bluetooth Player 1DIN (2V Out)</option>
+                    <option value="multimidia">Multimídia RCA (4V Out)</option>
+                    <option value="dsp">Processador DSP (6 Canais)</option>
+                    <option value="cd_player">CD/Bluetooth Player (2V)</option>
                 </select>
             </div>
 
@@ -556,185 +451,142 @@
                 <label>Arquitetura do Amplificador</label>
                 <select id="ampConfig" class="form-control" onchange="setupChannels()">
                     <option value="4-channel">Módulo 4 Canais (Stereo / Bridge)</option>
-                    <option value="mono-stereo">Multi-Módulo (1 Mono + 1 Stereo Dedicado)</option>
-                    <option value="1-channel">Monobloco High Power (1 Canal Mono)</option>
-                    <option value="5-channel">Módulo 5 Canais Hybrid (4 Stereo + 1 Sub Mono)</option>
+                    <option value="mono-stereo">Multi-Módulo (1 Mono + 1 Stereo)</option>
+                    <option value="1-channel">Monobloco (1 Canal Mono)</option>
                 </select>
             </div>
 
             <div class="grid-2">
                 <div class="form-group">
-                    <label>Impedância Mínima (Ω)</label>
+                    <label>Impedância Mín. (Ω)</label>
                     <select id="ampMinImp" class="form-control" onchange="calculateSystem()">
-                        <option value="1">1 Ohm por Canal</option>
-                        <option value="2" selected>2 Ohms por Canal</option>
-                        <option value="4">4 Ohms por Canal</option>
+                        <option value="1">1 Ohm</option>
+                        <option value="2" selected>2 Ohms</option>
+                        <option value="4">4 Ohms</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Tensão do Carro</label>
+                    <label>Tensão Operacional</label>
                     <select id="sysVoltage" class="form-control" onchange="calculateSystem()">
-                        <option value="12.6">12.6V (Bateria em Repouso)</option>
-                        <option value="14.4" selected>14.4V (Carro Ligado / Fonte)</option>
+                        <option value="12.6">12.6V (Bateria)</option>
+                        <option value="14.4" selected>14.4V (Fonte/Carro)</option>
                     </select>
                 </div>
             </div>
 
-            <div class="panel-header" style="margin-top: 10px;">
+            <div class="panel-header" style="margin-top: 5px;">
                 <i class="fa-solid fa-plug-circle-plus"></i>
-                <h2>3. Adicionar Aparelhos aos Canais</h2>
+                <h2>3. Conectar Falantes</h2>
             </div>
 
             <div class="form-group">
-                <label>Canal de Destino do Módulo</label>
-                <select id="targetChannel" class="form-control">
-                    <!-- Dynamic Channels -->
-                </select>
+                <label>Canal de Destino</label>
+                <select id="targetChannel" class="form-control"></select>
             </div>
 
             <div class="form-group">
-                <label>Tipo de Aparelho Sonoro</label>
+                <label>Tipo de Falante</label>
                 <select id="spkType" class="form-control">
-                    <option value="Subwoofer">Subwoofer (Graves Profundos)</option>
-                    <option value="Woofer">Woofer (Graves Secos / Trio)</option>
-                    <option value="Driver/Corneta">Driver de Compressão (Voz Médio)</option>
+                    <option value="Subwoofer">Subwoofer (Graves)</option>
+                    <option value="Woofer">Woofer (Graves Secos)</option>
+                    <option value="Driver/Corneta">Driver (Voz Médio)</option>
                     <option value="Super Tweeter">Super Tweeter (Agudos)</option>
-                    <option value="Kit 2 Vias">Kit 2 Vias / Coaxial (Portas)</option>
-                    <option value="Médio Grave 8">Médio Grave 8" / 10" (Médio Alto)</option>
+                    <option value="Kit 2 Vias">Kit 2 Vias (Portas)</option>
                 </select>
             </div>
 
             <div class="grid-2">
                 <div class="form-group">
-                    <label>Quantidade de Peças</label>
+                    <label>Qtd. Falantes</label>
                     <input type="number" id="spkQty" class="form-control" value="2" min="1" max="12">
                 </div>
                 <div class="form-group">
-                    <label>Potência Unit. (RMS)</label>
+                    <label>Potência (RMS Unit.)</label>
                     <input type="number" id="spkPower" class="form-control" value="350" step="50">
                 </div>
             </div>
 
             <div class="grid-2">
                 <div class="form-group">
-                    <label>Impedância Unit. (Ω)</label>
+                    <label>Impedância Unit.</label>
                     <select id="spkImp" class="form-control">
                         <option value="2">2 Ohms</option>
                         <option value="4" selected>4 Ohms</option>
                         <option value="8">8 Ohms</option>
-                        <option value="2+2">D2 (Dupla 2+2Ω)</option>
-                        <option value="4+4">D4 (Dupla 4+4Ω)</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Esquema de Ligação</label>
                     <select id="wireMode" class="form-control">
                         <option value="parallel">Em Paralelo (Dividi Ω)</option>
-                        <option value="series">Em Série / Sequencial (Soma Ω)</option>
-                        <option value="bridge">Bridge / Ponte (Canais 3+4)</option>
+                        <option value="series">Em Série (Soma Ω)</option>
+                        <option value="bridge">Bridge (Canais 3+4)</option>
                     </select>
                 </div>
             </div>
 
             <button class="btn btn-primary" onclick="addSpeakerToChannel()">
-                <i class="fa-solid fa-plus-circle"></i> Conectar Aparelho ao Módulo
+                <i class="fa-solid fa-plus-circle"></i> Adicionar ao Canal
             </button>
 
-            <div class="panel-header" style="margin-top: 10px;">
-                <i class="fa-solid fa-diagram-project"></i>
-                <h2>Mapeamento de Canais Inseridos</h2>
-            </div>
             <div id="channelsAllocated"></div>
         </div>
 
-        <!-- CENTER PANEL -->
+        <!-- PAINEL CENTRAL: MÉTRICAS E CANVAS -->
         <div class="panel">
             <div class="panel-header">
                 <i class="fa-solid fa-chart-pie"></i>
-                <h2>4. Dimensionamento Técnico & Consumo Elétrico</h2>
+                <h2>4. Cargas Elétricas & Fiação</h2>
             </div>
 
             <div class="metrics-grid">
                 <div class="metric-card">
-                    <div class="metric-lbl">Potência Total</div>
+                    <div class="metric-lbl">Potência RMS</div>
                     <div class="metric-val" id="valTotalPower">0 W</div>
-                    <div class="metric-lbl" style="font-size: 0.65rem;">RMS Nominal</div>
                 </div>
-
                 <div class="metric-card red">
-                    <div class="metric-lbl">Pico de Corrente</div>
+                    <div class="metric-lbl">Pico Corrente</div>
                     <div class="metric-val" id="valMaxAmps">0 A</div>
-                    <div class="metric-lbl" style="font-size: 0.65rem;">Senoidal Máximo</div>
                 </div>
-
                 <div class="metric-card cyan">
-                    <div class="metric-lbl">Consumo Musical</div>
+                    <div class="metric-lbl">Consumo Médio</div>
                     <div class="metric-val" id="valMusicAmps">0 A</div>
-                    <div class="metric-lbl" style="font-size: 0.65rem;">Média em Operação</div>
                 </div>
-
                 <div class="metric-card green">
-                    <div class="metric-lbl">Cabo Alimentação</div>
+                    <div class="metric-lbl">Cabo Força</div>
                     <div class="metric-val" id="valPowerCable">0 mm²</div>
-                    <div class="metric-lbl" id="valAwgGauge">0 AWG</div>
                 </div>
-            </div>
-
-            <div class="grid-2" style="margin-top: -6px;">
-                <div class="metric-card purple" style="text-align: left; padding: 12px 16px;">
-                    <div class="metric-lbl">Proteção Elétrica Recomendada</div>
-                    <div class="metric-val" id="valFuse" style="font-size: 1.15rem; margin-top: 2px;">0 A (ANL)</div>
-                    <div class="metric-lbl" style="font-size: 0.68rem; color: var(--text-muted);">Disjuntor ou Fusível ANL (Até 30cm)</div>
-                </div>
-
-                <div class="metric-card green" style="text-align: left; padding: 12px 16px;">
-                    <div class="metric-lbl">Bateria Auxiliar Necessária</div>
-                    <div class="metric-val" id="valAuxBattery" style="font-size: 1.15rem; margin-top: 2px;">0 Ah</div>
-                    <div class="metric-lbl" style="font-size: 0.68rem; color: var(--text-muted);">Capacidade AGM/Estacionária Extra</div>
-                </div>
-            </div>
-
-            <div id="impedanceAlertContainer"></div>
-
-            <div class="panel-header" style="margin-top: 5px;">
-                <i class="fa-solid fa-table-list"></i>
-                <h2>5. Tabela de Cabeamento para Alto-Falantes</h2>
             </div>
 
             <div class="wiring-table-container">
                 <table class="wiring-table">
                     <thead>
                         <tr>
-                            <th>Via / Aparelho</th>
+                            <th>Falante</th>
                             <th>Fiação Recomendada</th>
-                            <th>Tipo de Cabo</th>
-                            <th>Modo / Impedância</th>
+                            <th>Ligação</th>
                         </tr>
                     </thead>
                     <tbody id="wiringTableBody"></tbody>
                 </table>
             </div>
 
-            <div class="panel-header" style="margin-top: 10px;">
+            <div class="panel-header" style="margin-top: 5px;">
                 <i class="fa-solid fa-network-wired"></i>
-                <h2>6. Esquema Gráfico da Estrutura de Instalação</h2>
+                <h2>5. Esquema Elétrico Visual</h2>
             </div>
 
             <div class="canvas-container">
-                <canvas id="wiringCanvas" width="900" height="520"></canvas>
+                <canvas id="wiringCanvas"></canvas>
             </div>
         </div>
 
-        <!-- RIGHT PANEL -->
+        <!-- PAINEL DA DIREITA: PRODUTOS DO MERCADO -->
         <div class="panel catalog-panel">
             <div class="panel-header">
                 <i class="fa-solid fa-boxes-packing"></i>
-                <h2>7. Lista de Equipamentos & Links de Fabricantes</h2>
+                <h2>6. Fabricantes Recomendados</h2>
             </div>
-            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: -10px;">
-                Clique em qualquer produto da lista para abrir o site oficial do fabricante/marca.
-            </p>
-
             <div class="products-grid" id="productsCatalog"></div>
         </div>
 
@@ -742,10 +594,35 @@
 
     <script>
         let channelStructure = {};
+        let deferredPrompt;
+
+        // Registrar Service Worker para suporte PWA / Offline
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                self.addEventListener('install', e => e.waitUntil(self.skipWaiting()));
+                self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
+                self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => caches.match(e.request))));
+            `;
+            const blob = new Blob([swCode], { type: 'application/javascript' });
+            navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
+        }
+
+        // Evento de instalação do App no Celular
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const btn = document.getElementById('installPwaBtn');
+            btn.style.display = 'flex';
+            btn.addEventListener('click', () => {
+                btn.style.display = 'none';
+                deferredPrompt.prompt();
+            });
+        });
 
         window.onload = function() {
             setupChannels();
             loadPreset('sq_interno');
+            window.addEventListener('resize', calculateSystem);
         };
 
         function loadPreset(type) {
@@ -765,17 +642,13 @@
                 channelStructure['channel-mono'].mode = 'parallel';
                 channelStructure['channel-stereo-1'].speakers = [{ name: 'Driver/Corneta', qty: 4, power: 100, imp: 8 }];
                 channelStructure['channel-stereo-1'].mode = 'parallel';
-                channelStructure['channel-stereo-2'].speakers = [{ name: 'Super Tweeter', qty: 2, power: 100, imp: 8 }];
-                channelStructure['channel-stereo-2'].mode = 'parallel';
             } else if (type === 'paredao_heavy') {
                 document.getElementById('ampConfig').value = 'mono-stereo';
                 setupChannels();
-                channelStructure['channel-mono'].speakers = [{ name: 'Woofer 18" Heavy', qty: 4, power: 2500, imp: 2 }];
+                channelStructure['channel-mono'].speakers = [{ name: 'Woofer 18"', qty: 4, power: 2500, imp: 2 }];
                 channelStructure['channel-mono'].mode = 'parallel';
                 channelStructure['channel-stereo-1'].speakers = [{ name: 'Médio Grave 8"', qty: 4, power: 400, imp: 8 }];
                 channelStructure['channel-stereo-1'].mode = 'parallel';
-                channelStructure['channel-stereo-2'].speakers = [{ name: 'Driver/Corneta Trio', qty: 4, power: 150, imp: 8 }];
-                channelStructure['channel-stereo-2'].mode = 'parallel';
             }
             calculateSystem();
         }
@@ -787,25 +660,18 @@
 
             if (config === '4-channel') {
                 channelStructure = {
-                    'channel-1': { name: 'Canal 1 (Stereo Frontal L)', speakers: [], mode: 'parallel', finalImp: 0 },
-                    'channel-2': { name: 'Canal 2 (Stereo Frontal R)', speakers: [], mode: 'parallel', finalImp: 0 },
-                    'channel-3-4': { name: 'Canais 3 & 4 (Bridge / Ponte Subwoofer)', speakers: [], mode: 'bridge', finalImp: 0 }
+                    'channel-1': { name: 'Canal 1 (Stereo L)', speakers: [], mode: 'parallel', finalImp: 0 },
+                    'channel-2': { name: 'Canal 2 (Stereo R)', speakers: [], mode: 'parallel', finalImp: 0 },
+                    'channel-3-4': { name: 'Canais 3 & 4 (Bridge)', speakers: [], mode: 'bridge', finalImp: 0 }
                 };
             } else if (config === 'mono-stereo') {
                 channelStructure = {
-                    'channel-mono': { name: 'Módulo 1: Monobloco (Graves)', speakers: [], mode: 'parallel', finalImp: 0 },
-                    'channel-stereo-1': { name: 'Módulo 2: Canal Stereo 1 (Voz Médio)', speakers: [], mode: 'parallel', finalImp: 0 },
-                    'channel-stereo-2': { name: 'Módulo 2: Canal Stereo 2 (Agudos)', speakers: [], mode: 'parallel', finalImp: 0 }
+                    'channel-mono': { name: 'Módulo 1: Monobloco', speakers: [], mode: 'parallel', finalImp: 0 },
+                    'channel-stereo-1': { name: 'Módulo 2: Stereo Voz', speakers: [], mode: 'parallel', finalImp: 0 }
                 };
             } else if (config === '1-channel') {
                 channelStructure = {
-                    'channel-mono': { name: 'Canal Único Monobloco High Power', speakers: [], mode: 'parallel', finalImp: 0 }
-                };
-            } else if (config === '5-channel') {
-                channelStructure = {
-                    'channel-1-2': { name: 'Canais 1 & 2 (Frente)', speakers: [], mode: 'parallel', finalImp: 0 },
-                    'channel-3-4': { name: 'Canais 3 & 4 (Trás / Cornetas)', speakers: [], mode: 'parallel', finalImp: 0 },
-                    'channel-sub': { name: 'Canal 5 (Subwoofer Mono Dedicado)', speakers: [], mode: 'parallel', finalImp: 0 }
+                    'channel-mono': { name: 'Canal Único Monobloco', speakers: [], mode: 'parallel', finalImp: 0 }
                 };
             }
 
@@ -821,36 +687,20 @@
             const type = document.getElementById('spkType').value;
             const qty = parseInt(document.getElementById('spkQty').value);
             const power = parseFloat(document.getElementById('spkPower').value);
-            const impRaw = document.getElementById('spkImp').value;
+            const imp = parseFloat(document.getElementById('spkImp').value);
             const mode = document.getElementById('wireMode').value;
 
-            let numericImp = parseFloat(impRaw);
-            if (impRaw === '2+2') numericImp = 4;
-            if (impRaw === '4+4') numericImp = 2;
-
             if (channelStructure[chKey]) {
-                channelStructure[chKey].speakers.push({
-                    name: type,
-                    qty: qty,
-                    power: power,
-                    imp: numericImp
-                });
+                channelStructure[chKey].speakers.push({ name: type, qty, power, imp });
                 channelStructure[chKey].mode = mode;
                 calculateSystem();
             }
         }
 
-        function removeSpeaker(chKey, index) {
-            channelStructure[chKey].speakers.splice(index, 1);
-            calculateSystem();
-        }
-
         function calculateSystem() {
             const voltage = parseFloat(document.getElementById('sysVoltage').value);
             const ampMinImp = parseFloat(document.getElementById('ampMinImp').value);
-            
             let totalPower = 0;
-            let impedanceAlerts = [];
 
             const allocDiv = document.getElementById('channelsAllocated');
             const tableBody = document.getElementById('wiringTableBody');
@@ -871,29 +721,17 @@
                         totalQty += s.qty;
                     });
 
-                    if (ch.mode === 'parallel') {
-                        chImpedance = baseImp / totalQty;
-                    } else if (ch.mode === 'series') {
-                        chImpedance = baseImp * totalQty;
-                    } else if (ch.mode === 'bridge') {
-                        chImpedance = baseImp / totalQty;
-                        if (chImpedance < (ampMinImp * 2)) {
-                            impedanceAlerts.push(`Atenção: A ponte (Bridge) no <strong>${ch.name}</strong> ficou em ${chImpedance}Ω. Mínimo recomendado em Bridge é ${ampMinImp * 2}Ω.`);
-                        }
-                    }
+                    if (ch.mode === 'parallel') chImpedance = baseImp / totalQty;
+                    else if (ch.mode === 'series') chImpedance = baseImp * totalQty;
+                    else if (ch.mode === 'bridge') chImpedance = baseImp / totalQty;
 
                     ch.finalImp = chImpedance;
 
-                    if (ch.mode !== 'bridge' && chImpedance < ampMinImp) {
-                        impedanceAlerts.push(`Risco Elétrico: Impedância no <strong>${ch.name}</strong> está em ${chImpedance}Ω (Abaixo do mínimo de ${ampMinImp}Ω do módulo).`);
-                    }
-
-                    const recommendedSpeakerCable = chPower > 1000 ? "4.0 mm² (11 AWG) Paralelo Cobre" : (chPower > 400 ? "2.5 mm² (13 AWG) Cobre" : "1.5 mm² (15 AWG) Polarizado");
+                    const recommendedSpeakerCable = chPower > 1000 ? "4.0 mm² Cobre" : (chPower > 400 ? "2.5 mm² Cobre" : "1.5 mm² Polarizado");
                     tableBody.innerHTML += `
                         <tr>
                             <td><strong>${ch.speakers[0].name}</strong> (${totalQty}x)</td>
                             <td><span style="color:var(--accent-cyan); font-weight:bold;">${recommendedSpeakerCable}</span></td>
-                            <td>Cabo Bicolor de Áudio</td>
                             <td>${ch.mode.toUpperCase()} (${chImpedance.toFixed(1)} Ω)</td>
                         </tr>
                     `;
@@ -902,222 +740,122 @@
                 totalPower += chPower;
 
                 let speakerListHTML = '';
-                ch.speakers.forEach((s, idx) => {
-                    speakerListHTML += `
-                        <div class="channel-speaker-item">
-                            <span>${s.qty}x ${s.name} (${s.power}W RMS cad. - ${s.imp}Ω)</span>
-                            <i class="fa-solid fa-xmark" style="color: var(--accent-red); cursor: pointer;" onclick="removeSpeaker('${chKey}', ${idx})"></i>
-                        </div>
-                    `;
+                ch.speakers.forEach((s) => {
+                    speakerListHTML += `<div class="channel-speaker-item"><span>${s.qty}x ${s.name} (${s.power}W RMS)</span></div>`;
                 });
 
                 allocDiv.innerHTML += `
                     <div class="channel-card">
                         <div class="channel-card-header">
-                            <span class="channel-title">${ch.name}</span>
-                            <span class="channel-mode-badge">${ch.mode.toUpperCase()} (${chImpedance.toFixed(1)} Ω)</span>
+                            <span>${ch.name}</span>
+                            <span>${chImpedance.toFixed(1)} Ω</span>
                         </div>
-                        ${speakerListHTML.length > 0 ? speakerListHTML : '<div style="font-size:0.75rem; color:var(--text-muted);">Nenhum aparelho conectado neste canal.</div>'}
+                        ${speakerListHTML}
                     </div>
                 `;
             }
-
-            const alertDiv = document.getElementById('impedanceAlertContainer');
-            alertDiv.innerHTML = '';
-            impedanceAlerts.forEach(msg => {
-                alertDiv.innerHTML += `<div class="alert-box"><i class="fa-solid fa-triangle-exclamation"></i> <div>${msg}</div></div>`;
-            });
 
             const efficiency = 0.85;
             const maxAmps = totalPower > 0 ? totalPower / (voltage * efficiency) : 0;
             const musicalAmps = maxAmps * 0.50;
 
             let cableGauge = 0;
-            let awgGauge = "10 AWG";
             if (maxAmps > 0) {
                 const deltaV = voltage * 0.03;
                 const exactGauge = (2 * 4.5 * maxAmps * 0.0175) / deltaV;
-
-                if (exactGauge <= 6) { cableGauge = 6; awgGauge = "9 AWG"; }
-                else if (exactGauge <= 10) { cableGauge = 10; awgGauge = "7 AWG"; }
-                else if (exactGauge <= 16) { cableGauge = 16; awgGauge = "5 AWG"; }
-                else if (exactGauge <= 21) { cableGauge = 21; awgGauge = "4 AWG"; }
-                else if (exactGauge <= 35) { cableGauge = 35; awgGauge = "2 AWG"; }
-                else if (exactGauge <= 50) { cableGauge = 50; awgGauge = "0 AWG"; }
-                else { cableGauge = 70; awgGauge = "2/0 AWG"; }
+                if (exactGauge <= 6) cableGauge = 6;
+                else if (exactGauge <= 10) cableGauge = 10;
+                else if (exactGauge <= 16) cableGauge = 16;
+                else if (exactGauge <= 21) cableGauge = 21;
+                else if (exactGauge <= 35) cableGauge = 35;
+                else cableGauge = 50;
             }
-
-            const fuseRating = Math.ceil((maxAmps * 1.18) / 10) * 10;
-            const auxBatteryAh = Math.max(0, Math.ceil(musicalAmps - 50));
 
             document.getElementById('valTotalPower').innerText = `${totalPower.toLocaleString()} W`;
             document.getElementById('valMaxAmps').innerText = `${maxAmps.toFixed(1)} A`;
             document.getElementById('valMusicAmps').innerText = `${musicalAmps.toFixed(1)} A`;
             document.getElementById('valPowerCable').innerText = `${cableGauge} mm²`;
-            document.getElementById('valAwgGauge').innerText = awgGauge;
-            document.getElementById('valFuse').innerText = fuseRating > 0 ? `${fuseRating} A (ANL)` : '0 A';
-            document.getElementById('valAuxBattery').innerText = auxBatteryAh > 0 ? `${auxBatteryAh} Ah` : 'Cofre OK';
 
-            drawSchematicCanvas(totalPower, cableGauge, fuseRating, auxBatteryAh);
+            drawSchematicCanvas(totalPower, cableGauge);
             renderProducts(totalPower);
         }
 
-        function drawSchematicCanvas(totalPower, cableGauge, fuseRating, auxBattery) {
+        function drawSchematicCanvas(totalPower, cableGauge) {
             const canvas = document.getElementById('wiringCanvas');
             const ctx = canvas.getContext('2d');
-
             canvas.width = canvas.parentElement.clientWidth;
             canvas.height = canvas.parentElement.clientHeight;
 
             const w = canvas.width;
             const h = canvas.height;
-
             ctx.clearRect(0, 0, w, h);
 
-            if (totalPower === 0) {
-                ctx.fillStyle = '#8290a0';
-                ctx.font = '14px Rajdhani';
-                ctx.fillText('Adicione alto-falantes e módulos para desenhar a estrutura de instalação.', w / 2 - 210, h / 2);
-                return;
-            }
+            if (totalPower === 0) return;
 
-            const playerType = document.getElementById('playerSource').options[document.getElementById('playerSource').selectedIndex].text.split('(')[0];
+            const midY = h / 2;
+            
+            // Desenhar Bateria e Módulo
+            drawBox(ctx, 15, midY - 25, 60, 50, '#0f131d', '#ff5500', 'BAT', '60Ah');
+            drawWire(ctx, 75, midY, 140, midY, '#ff3333', 3);
+            ctx.fillStyle = '#00f0ff'; ctx.font = '9px Rajdhani';
+            ctx.fillText(`+${cableGauge}mm²`, 85, midY - 8);
 
-            drawBox(ctx, 25, 40, 110, 50, '#0f131d', '#00f0ff', 'FONTE DE SINAL', playerType);
+            drawBox(ctx, 140, midY - 40, 100, 80, '#090d14', '#ff5500', 'AMPLIFICADOR', `${totalPower}W`);
 
-            drawWire(ctx, 135, 65, 230, 65, '#00f0ff', 2);
-            ctx.fillStyle = '#00f0ff';
-            ctx.font = '10px Rajdhani';
-            ctx.fillText('Cabos RCA Blindados', 140, 58);
-
-            const midY = 200;
-
-            drawBox(ctx, 25, midY - 35, 75, 70, '#0f131d', '#ff5500', 'BATERIA', 'COFRE 60Ah');
-
-            let currX = 100;
-
-            if (auxBattery > 0) {
-                drawWire(ctx, currX, midY - 10, currX + 45, midY - 10, '#ff3333', 4);
-                currX += 45;
-                drawBox(ctx, currX, midY - 35, 80, 70, '#0f131d', '#00ff88', 'AUXILIAR', `${auxBattery}Ah AGM`);
-                currX += 80;
-            }
-
-            drawWire(ctx, currX, midY - 10, currX + 45, midY - 10, '#ff3333', 4);
-            currX += 45;
-            drawBox(ctx, currX, midY - 20, 55, 40, '#ffb300', '#000', 'FUSÍVEL', `${fuseRating}A`);
-
-            ctx.fillStyle = '#00f0ff';
-            ctx.font = 'bold 11px Rajdhani';
-            ctx.fillText(`Cabo +${cableGauge}mm²`, currX - 65, midY - 26);
-
-            currX += 55;
-
-            drawWire(ctx, currX, midY - 10, currX + 45, midY - 10, '#ff3333', 4);
-            currX += 45;
-            const ampW = 145;
-            const ampH = 180;
-            const ampY = midY - 60;
-            drawBox(ctx, currX, ampY, ampW, ampH, '#090d14', '#ff5500', 'AMPLIFICADOR CENTRAL', `${totalPower}W RMS TOTAL`);
-
-            drawWire(ctx, currX + 72, ampY + ampH, currX + 72, ampY + ampH + 40, '#666', 4);
-            ctx.fillStyle = '#8290a0';
-            ctx.font = '10px Rajdhani';
-            ctx.fillText('CHASSI / ATERRAMENTO', currX + 18, ampY + ampH + 54);
-
-            const outX = currX + ampW;
-            let channelY = ampY + 28;
+            // Canais de Saída
+            let chY = midY - 20;
+            const outX = 240;
 
             for (let chKey in channelStructure) {
                 const ch = channelStructure[chKey];
                 if (ch.speakers.length > 0) {
-                    drawWire(ctx, outX, channelY, outX + 50, channelY, '#00ff88', 2);
-                    drawWire(ctx, outX, channelY + 12, outX + 50, channelY + 12, '#00f0ff', 2);
-
-                    const boxTitle = `${ch.speakers[0].qty}x ${ch.speakers[0].name}`;
-                    const modeText = `${ch.mode.toUpperCase()} (${ch.finalImp.toFixed(1)}Ω)`;
-
-                    drawBox(ctx, outX + 50, channelY - 15, 175, 44, '#0f131d', ch.mode === 'bridge' ? '#ab47bc' : '#00f0ff', boxTitle, modeText);
-
-                    channelY += 54;
+                    drawWire(ctx, outX, chY, outX + 30, chY, '#00ff88', 2);
+                    drawBox(ctx, outX + 30, chY - 12, 110, 26, '#0f131d', '#00f0ff', `${ch.speakers[0].name}`, `${ch.finalImp.toFixed(1)}Ω`);
+                    chY += 32;
                 }
             }
         }
 
         function drawBox(ctx, x, y, width, height, bgColor, borderColor, title, sub) {
-            ctx.fillStyle = bgColor;
-            ctx.fillRect(x, y, width, height);
-            ctx.strokeStyle = borderColor;
-            ctx.lineWidth = 2;
-            ctx.strokeRect(x, y, width, height);
-
-            ctx.fillStyle = '#fff';
-            ctx.font = 'bold 11px Rajdhani';
-            ctx.textAlign = 'center';
+            ctx.fillStyle = bgColor; ctx.fillRect(x, y, width, height);
+            ctx.strokeStyle = borderColor; ctx.lineWidth = 1.5; ctx.strokeRect(x, y, width, height);
+            ctx.fillStyle = '#fff'; ctx.font = 'bold 9px Rajdhani'; ctx.textAlign = 'center';
             ctx.fillText(title, x + width / 2, y + height / 2 - 2);
-            ctx.fillStyle = borderColor;
-            ctx.font = '10px Inter';
-            ctx.fillText(sub, x + width / 2, y + height / 2 + 13);
+            ctx.fillStyle = borderColor; ctx.font = '8px Inter';
+            ctx.fillText(sub, x + width / 2, y + height / 2 + 8);
             ctx.textAlign = 'left';
         }
 
         function drawWire(ctx, x1, y1, x2, y2, color, width) {
-            ctx.strokeStyle = color;
-            ctx.lineWidth = width;
-            ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
-            ctx.stroke();
+            ctx.strokeStyle = color; ctx.lineWidth = width;
+            ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
         }
 
         function renderProducts(power) {
             const grid = document.getElementById('productsCatalog');
             grid.innerHTML = '';
-
             let products = [];
 
             if (power <= 1200) {
                 products = [
-                    { name: 'Pioneer DMH-Z5380TV', brand: 'Pioneer', url: 'https://www.pioneer.com.br', spec: 'Central Multimídia 2DIN com RCA 4V', cat: 'Player / Multimídia', icon: 'fa-tv' },
-                    { name: 'Taramps TS 400x4 Digital', brand: 'Taramps', url: 'https://www.taramps.com.br', spec: '4 Canais 100W RMS @ 2Ω / Bridge 200W', cat: 'Amplificador', icon: 'fa-bolt' },
-                    { name: 'Pioneer TS-W312S4 12"', brand: 'Pioneer', url: 'https://www.pioneer.com.br', spec: 'Subwoofer 500W RMS - 4 Ohms', cat: 'Subwoofer', icon: 'fa-bullhorn' },
-                    { name: 'JBL Selenium Kit 2 Vias 6TR6A', brand: 'JBL', url: 'https://www.jbl.com.br', spec: '120W RMS com Crossover', cat: 'Voz / Portas', icon: 'fa-volume-high' },
-                    { name: 'Technoise Cabo RCA 5m', brand: 'Technoise', url: 'https://www.technoise.com.br', spec: 'Blindagem Dupla contra Interferências', cat: 'Cabeamento Sinal', icon: 'fa-plug' }
-                ];
-            } else if (power <= 4000) {
-                products = [
-                    { name: 'Expert PX2 R-Line DSP', brand: 'Expert Electronics', url: 'https://expertelectronics.com.br', spec: 'Processador 6 Canais com Equalizador/Limiter', cat: 'Processador DSP', icon: 'fa-sliders' },
-                    { name: 'Soundigital SD 3000.1 EVOX 5', brand: 'Soundigital', url: 'https://soundigital.com.br', spec: '3000W RMS Monobloco @ 1Ω / 2Ω', cat: 'Amplificador Mono', icon: 'fa-bolt' },
-                    { name: 'Banda Viking 800.4', brand: 'Banda Audioparts', url: 'https://bandaaudioparts.com.br', spec: '4 Canais de 200W RMS para Voz/Cornetas', cat: 'Amplificador Voz', icon: 'fa-bolt' },
-                    { name: 'Eros Target Bass 3.0K 15"', brand: 'Eros Alto-Falantes', url: 'https://www.eros.com.br', spec: '1500W RMS Woofer de Alta Pressão', cat: 'Woofer Trio', icon: 'fa-bullhorn' },
-                    { name: 'Usina 120A Smart Bivolt', brand: 'Usina Spark', url: 'https://www.sparkpower.com.br', spec: 'Fonte Automotiva com Voltímetro Digital', cat: 'Alimentação', icon: 'fa-charging-station' },
-                    { name: 'Bateria Freedom Estacionária 105Ah', brand: 'Moura / Freedom', url: 'https://www.moura.com.br', spec: 'Ciclo Profundo para Longa Autonomia', cat: 'Bateria Auxiliar', icon: 'fa-car-battery' }
+                    { name: 'Taramps TS 400x4', brand: 'Taramps', url: 'https://www.taramps.com.br', spec: '4 Canais 100W RMS @ 2Ω', icon: 'fa-bolt' },
+                    { name: 'Pioneer TS-W312S4 12"', brand: 'Pioneer', url: 'https://www.pioneer.com.br', spec: 'Subwoofer 500W RMS', icon: 'fa-bullhorn' }
                 ];
             } else {
                 products = [
-                    { name: 'Stetsom STX2448 DSP', brand: 'Stetsom', url: 'https://www.stetsom.com.br', spec: 'Processador Digital 24 bits / 48kHz', cat: 'Processador DSP', icon: 'fa-sliders' },
-                    { name: 'Taramps MD 8000.1 Mono', brand: 'Taramps', url: 'https://www.taramps.com.br', spec: '8000W RMS @ 1 Ohm Digital High Power', cat: 'Amplificador Heavy', icon: 'fa-bolt' },
-                    { name: 'Fonte JFA Heavy Duty 200A', brand: 'JFA Eletrônicos', url: 'https://jfaeletronicos.com.br', spec: 'Fonte Digital Pro com Leitor de Amperagem', cat: 'Alimentação', icon: 'fa-charging-station' },
-                    { name: 'Cabo Flex Cobre 50mm²', brand: 'Technoise', url: 'https://www.technoise.com.br', spec: '100% Cobre Puro para Competição e Paredão', cat: 'Cabeamento Pro', icon: 'fa-plug' }
+                    { name: 'Soundigital SD 3000.1', brand: 'Soundigital', url: 'https://soundigital.com.br', spec: '3000W RMS Monobloco', icon: 'fa-bolt' },
+                    { name: 'Eros Target Bass 3.0K', brand: 'Eros', url: 'https://www.eros.com.br', spec: '1500W RMS Woofer 15"', icon: 'fa-bullhorn' }
                 ];
             }
 
             products.forEach(p => {
                 grid.innerHTML += `
-                    <a class="product-card" href="${p.url}" target="_blank" title="Clique para abrir o site oficial da ${p.brand}">
-                        <div class="product-icon">
-                            <i class="fa-solid ${p.icon}"></i>
-                        </div>
-                        <div class="product-details">
-                            <div class="product-name">
-                                <span>${p.name}</span>
-                                <i class="fa-solid fa-external-link"></i>
-                            </div>
+                    <a class="product-card" href="${p.url}" target="_blank">
+                        <div class="product-icon"><i class="fa-solid ${p.icon}"></i></div>
+                        <div>
+                            <div class="product-name"><span>${p.name}</span> <i class="fa-solid fa-external-link" style="font-size:0.7rem; color:var(--accent-cyan)"></i></div>
                             <div class="product-spec">${p.spec}</div>
-                            <div class="product-brand-row">
-                                <span class="product-tag">${p.cat}</span>
-                                <span class="brand-badge">${p.brand}</span>
-                            </div>
+                            <span class="product-tag">${p.brand}</span>
                         </div>
                     </a>
                 `;
