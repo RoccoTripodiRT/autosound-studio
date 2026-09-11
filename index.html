@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AutoSound Studio Pro V6 - Engenharia de Som Automotivo</title>
+    <title>AutoSound Studio Pro V7 - Engenharia de Som Automotivo</title>
     
     <!-- Meta tags PWA -->
     <meta name="theme-color" content="#07090e">
@@ -110,12 +110,12 @@
             margin: 15px auto;
             padding: 0 15px;
             display: grid;
-            grid-template-columns: 440px 1fr 400px;
+            grid-template-columns: 460px 1fr 380px;
             gap: 18px;
         }
 
         @media (max-width: 1500px) {
-            .workspace { grid-template-columns: 400px 1fr; }
+            .workspace { grid-template-columns: 420px 1fr; }
             .catalog-panel { grid-column: 1 / -1; }
         }
 
@@ -391,6 +391,17 @@
         }
 
         .btn-remove:hover { background: rgba(255, 42, 95, 0.2); }
+
+        .sub-config-box {
+            background: rgba(255, 85, 0, 0.05);
+            border: 1px solid rgba(255, 85, 0, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
     </style>
 </head>
 <body>
@@ -399,7 +410,7 @@
         <div class="brand">
             <i class="fa-solid fa-sliders"></i>
             <div>
-                <h1 class="brand-title">AUTOSOUND <span>STUDIO V6</span></h1>
+                <h1 class="brand-title">AUTOSOUND <span>STUDIO V7</span></h1>
             </div>
         </div>
         <button id="installPwaBtn" class="btn-install">
@@ -409,7 +420,7 @@
 
     <div class="workspace">
         
-        <!-- ESQUERDA: CONTROLES -->
+        <!-- ESQUERDA: PAINEL DE CONTROLE -->
         <div class="panel">
             <div class="panel-header">
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
@@ -417,9 +428,9 @@
             </div>
             
             <div class="preset-buttons">
-                <div class="btn-preset" onclick="loadPreset('sq_interno')">🔊 Interno 4 Portas</div>
-                <div class="btn-preset" onclick="loadPreset('trio_médio')">🎺 Trio Elétrico Mala</div>
-                <div class="btn-preset" onclick="loadPreset('paredao_heavy')">🔊 Paredão / Heavy</div>
+                <div class="btn-preset" onclick="loadPreset('sq_interno')">🔊 Interno (Diant + Tras)</div>
+                <div class="btn-preset" onclick="loadPreset('trio_médio')">🎺 Trio Mala (Stereo/Mono)</div>
+                <div class="btn-preset" onclick="loadPreset('paredao_heavy')">🔊 Paredão Heavy Bass</div>
             </div>
 
             <div class="panel-header" style="margin-top: 5px;">
@@ -439,7 +450,7 @@
             <div class="form-group">
                 <label>Arquitetura do Amplificador</label>
                 <select id="ampConfig" class="form-control" onchange="setupChannels()">
-                    <option value="4-channel">Amplificador 4 Canais (Portas Diant. / Tras. / Bridge)</option>
+                    <option value="4-channel">Amplificador 4 Canais (Stereo / Bridge)</option>
                     <option value="mono-stereo">Multi-Amplificador (1 Mono Graves + 1 Stereo Voz)</option>
                     <option value="1-channel">Amplificador Monobloco High Power (1 Canal Mono)</option>
                     <option value="5-channel">Amplificador 5 Canais Hybrid (4 Canais + Sub Mono)</option>
@@ -465,44 +476,60 @@
                 </div>
             </div>
 
+            <!-- SETOR 3 REESTRUTURADO -->
             <div class="panel-header" style="margin-top: 5px;">
                 <i class="fa-solid fa-plug-circle-plus"></i>
-                <h2>3. Conectar Falantes por Saída</h2>
+                <h2>3. Configuração dos Canais & Falantes</h2>
             </div>
 
             <div class="form-group">
-                <label>Canal / Saída de Destino</label>
-                <select id="targetChannel" class="form-control"></select>
+                <label>Saída de Destino no Amplificador</label>
+                <select id="targetChannel" class="form-control" onchange="updateChannelModeOptions()"></select>
             </div>
 
             <div class="form-group">
-                <label>Tipo de Alto-Falante / Via</label>
-                <select id="spkType" class="form-control">
-                    <option value="Kit 2 Vias (Porta Diant.)">Kit 2 Vias (Porta Dianteira)</option>
-                    <option value="Coaxial/Triaxial (Porta Tras.)">Coaxial/Triaxial (Porta Traseira)</option>
-                    <option value="Falante 6x9 (Tampão)">Alto-Falante 6x9" (Tampão/Mala)</option>
-                    <option value="Subwoofer D2 (Bob. Dupla 2+2)">Subwoofer (Bobina Dupla 2+2Ω)</option>
-                    <option value="Subwoofer D4 (Bob. Dupla 4+4)">Subwoofer (Bobina Dupla 4+4Ω)</option>
-                    <option value="Subwoofer Simples 4Ω">Subwoofer (Bobina Simples 4Ω)</option>
-                    <option value="Woofer 12/15 (Grave Seco)">Woofer 12" / 15" (Grave Seco)</option>
-                    <option value="Médio Grave 8/10">Médio Grave 8" ou 10" (Médio Alto)</option>
-                    <option value="Driver de Compressão">Driver de Compressão (Corneta)</option>
-                    <option value="Super Tweeter">Super Tweeter (Agudos)</option>
+                <label>Topologia de Operação deste Canal</label>
+                <select id="channelTopology" class="form-control">
+                    <option value="independent">Canais Individuais (1 Falante por Canal)</option>
+                    <option value="associated">Canais Associados (Múltiplos Falantes no Canal)</option>
+                    <option value="bridge">Modo Bridge / Ponte (Ex: Canais 3+4 para Subwoofer)</option>
                 </select>
             </div>
 
-            <div class="grid-2">
+            <div class="sub-config-box">
                 <div class="form-group">
-                    <label>Quantidade</label>
-                    <input type="number" id="spkQty" class="form-control" value="1" min="1" max="12">
+                    <label>Componente 1 (Principal)</label>
+                    <select id="spkType1" class="form-control">
+                        <option value="Kit 2 Vias (Porta Diant.)">Kit 2 Vias (Porta Dianteira)</option>
+                        <option value="Coaxial/Triaxial (Porta Tras.)">Coaxial/Triaxial (Porta Traseira)</option>
+                        <option value="Falante 6x9 (Tampão)">Alto-Falante 6x9" (Tampão/Mala)</option>
+                        <option value="Subwoofer D2 (Bob. Dupla 2+2)">Subwoofer (Bobina Dupla 2+2Ω)</option>
+                        <option value="Subwoofer D4 (Bob. Dupla 4+4)">Subwoofer (Bobina Dupla 4+4Ω)</option>
+                        <option value="Subwoofer Simples 4Ω">Subwoofer (Bobina Simples 4Ω)</option>
+                        <option value="Woofer 12/15 (Grave Seco)">Woofer 12" / 15" (Grave Seco)</option>
+                        <option value="Médio Grave 8/10">Médio Grave 8" / 10"</option>
+                        <option value="Driver de Compressão">Driver de Compressão (Corneta)</option>
+                        <option value="Super Tweeter">Super Tweeter (Agudos)</option>
+                    </select>
                 </div>
+
                 <div class="form-group">
-                    <label>Potência RMS Unit.</label>
-                    <input type="number" id="spkPower" class="form-control" value="100" step="10">
+                    <label>Componente 2 (Secundário / Opcional)</label>
+                    <select id="spkType2" class="form-control">
+                        <option value="none">-- Nenhum (Apenas Falante Principal) --</option>
+                        <option value="Coaxial (Porta Tras.)">Coaxial (Porta Traseira)</option>
+                        <option value="Kit 2 Vias (Porta Diant.)">Kit 2 Vias (Porta Dianteira)</option>
+                        <option value="Driver de Compressão">Driver de Compressão (Corneta)</option>
+                        <option value="Super Tweeter">Super Tweeter (Agudos)</option>
+                    </select>
                 </div>
             </div>
 
             <div class="grid-2">
+                <div class="form-group">
+                    <label>Potência Unit. (RMS)</label>
+                    <input type="number" id="spkPower" class="form-control" value="100" step="10">
+                </div>
                 <div class="form-group">
                     <label>Impedância Unit.</label>
                     <select id="spkImp" class="form-control">
@@ -511,25 +538,25 @@
                         <option value="8">8 Ohms</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label>Ligação neste Canal</label>
-                    <select id="wireMode" class="form-control">
-                        <option value="direct">Canal Único (1 Falante Dedicado)</option>
-                        <option value="parallel">Em Paralelo (Dividi Impedância)</option>
-                        <option value="series">Em Série (Soma Impedância)</option>
-                        <option value="bridge">Bridge / Ponte (Canais 3+4)</option>
-                    </select>
-                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Modo de Conexão Física da Dupla</label>
+                <select id="wiringAssociation" class="form-control">
+                    <option value="parallel">Em Paralelo (Dividi Impedância - Ex: 4Ω + 4Ω = 2Ω)</option>
+                    <option value="series">Em Série / Sequencial (Soma Impedância - Ex: 4Ω + 4Ω = 8Ω)</option>
+                    <option value="direct">Canais Separados / Canal Único (Dedicado)</option>
+                </select>
             </div>
 
             <button class="btn btn-primary" onclick="addSpeakerToChannel()">
-                <i class="fa-solid fa-plus-circle"></i> Conectar Falante ao Amplificador
+                <i class="fa-solid fa-plus-circle"></i> Aplicar Conexão ao Amplificador
             </button>
 
             <div id="channelsAllocated"></div>
         </div>
 
-        <!-- CENTRO: MÉTRICAS E ESQUEMA -->
+        <!-- CENTRO: MÉTRICAS E DESENHO -->
         <div class="panel">
             <div class="panel-header">
                 <i class="fa-solid fa-chart-pie"></i>
@@ -560,10 +587,10 @@
                 <table class="wiring-table">
                     <thead>
                         <tr>
-                            <th>Falantes / Vias no Canal</th>
+                            <th>Canais & Componentes Ligados</th>
                             <th>Fiação Recomendada</th>
                             <th>Bitola AWG</th>
-                            <th>Modo / Impedância Final</th>
+                            <th>Topologia / Impedância Final</th>
                         </tr>
                     </thead>
                     <tbody id="wiringTableBody"></tbody>
@@ -628,35 +655,47 @@
                 setupChannels();
                 
                 channelStructure['channel-1'].speakers = [
-                    { name: 'Kit 2 Vias (Porta Diant.)', qty: 1, power: 80, imp: 4 },
-                    { name: 'Coaxial (Porta Tras.)', qty: 1, power: 60, imp: 4 }
+                    { name: 'Kit 2 Vias (Porta Diant.)', power: 80, imp: 4 },
+                    { name: 'Coaxial (Porta Tras.)', power: 60, imp: 4 }
                 ];
-                channelStructure['channel-1'].mode = 'parallel';
+                channelStructure['channel-1'].association = 'parallel';
+                channelStructure['channel-1'].topology = 'associated';
 
                 channelStructure['channel-2'].speakers = [
-                    { name: 'Kit 2 Vias (Porta Diant.)', qty: 1, power: 80, imp: 4 },
-                    { name: 'Coaxial (Porta Tras.)', qty: 1, power: 60, imp: 4 }
+                    { name: 'Kit 2 Vias (Porta Diant.)', power: 80, imp: 4 },
+                    { name: 'Coaxial (Porta Tras.)', power: 60, imp: 4 }
                 ];
-                channelStructure['channel-2'].mode = 'parallel';
+                channelStructure['channel-2'].association = 'parallel';
+                channelStructure['channel-2'].topology = 'associated';
 
                 channelStructure['channel-3-4'].speakers = [
-                    { name: 'Subwoofer Simples 4Ω', qty: 1, power: 350, imp: 4 }
+                    { name: 'Subwoofer Simples 4Ω', power: 350, imp: 4 }
                 ];
-                channelStructure['channel-3-4'].mode = 'bridge';
+                channelStructure['channel-3-4'].association = 'direct';
+                channelStructure['channel-3-4'].topology = 'bridge';
             } else if (type === 'trio_médio') {
                 document.getElementById('ampConfig').value = 'mono-stereo';
                 setupChannels();
-                channelStructure['channel-mono'].speakers = [{ name: 'Woofer 12/15 (Grave Seco)', qty: 2, power: 1200, imp: 4 }];
-                channelStructure['channel-mono'].mode = 'parallel';
-                channelStructure['channel-stereo-1'].speakers = [{ name: 'Driver de Compressão', qty: 2, power: 100, imp: 8 }];
-                channelStructure['channel-stereo-1'].mode = 'parallel';
+                channelStructure['channel-mono'].speakers = [{ name: 'Woofer 12/15 (Grave Seco)', power: 1200, imp: 4 }];
+                channelStructure['channel-mono'].association = 'parallel';
+                channelStructure['channel-mono'].topology = 'associated';
+
+                channelStructure['channel-stereo-1'].speakers = [
+                    { name: 'Driver de Compressão', power: 100, imp: 8 },
+                    { name: 'Super Tweeter', power: 100, imp: 8 }
+                ];
+                channelStructure['channel-stereo-1'].association = 'parallel';
+                channelStructure['channel-stereo-1'].topology = 'associated';
             } else if (type === 'paredao_heavy') {
                 document.getElementById('ampConfig').value = 'mono-stereo';
                 setupChannels();
-                channelStructure['channel-mono'].speakers = [{ name: 'Woofer 12/15 (Grave Seco)', qty: 4, power: 2500, imp: 2 }];
-                channelStructure['channel-mono'].mode = 'parallel';
-                channelStructure['channel-stereo-1'].speakers = [{ name: 'Médio Grave 8/10', qty: 4, power: 400, imp: 8 }];
-                channelStructure['channel-stereo-1'].mode = 'parallel';
+                channelStructure['channel-mono'].speakers = [{ name: 'Woofer 18" Heavy', power: 2500, imp: 2 }];
+                channelStructure['channel-mono'].association = 'parallel';
+                channelStructure['channel-mono'].topology = 'associated';
+
+                channelStructure['channel-stereo-1'].speakers = [{ name: 'Médio Grave 8/10', power: 400, imp: 8 }];
+                channelStructure['channel-stereo-1'].association = 'parallel';
+                channelStructure['channel-stereo-1'].topology = 'associated';
             }
             calculateSystem();
         }
@@ -668,26 +707,26 @@
 
             if (config === '4-channel') {
                 channelStructure = {
-                    'channel-1': { name: 'Canal 1 (Lado Esquerdo Front/Rear)', speakers: [], mode: 'parallel', finalImp: 0 },
-                    'channel-2': { name: 'Canal 2 (Lado Direito Front/Rear)', speakers: [], mode: 'parallel', finalImp: 0 },
-                    'channel-3-4': { name: 'Canais 3 & 4 (Bridge Subwoofer)', speakers: [], mode: 'bridge', finalImp: 0 }
+                    'channel-1': { name: 'Canal 1 (Portas Esquerda Diant/Tras)', speakers: [], association: 'parallel', topology: 'associated', finalImp: 0 },
+                    'channel-2': { name: 'Canal 2 (Portas Direita Diant/Tras)', speakers: [], association: 'parallel', topology: 'associated', finalImp: 0 },
+                    'channel-3-4': { name: 'Canais 3 & 4 (Bridge Subwoofer)', speakers: [], association: 'direct', topology: 'bridge', finalImp: 0 }
                 };
             } else if (config === 'mono-stereo') {
                 channelStructure = {
-                    'channel-mono': { name: 'Amplificador 1: Monobloco (Graves)', speakers: [], mode: 'parallel', finalImp: 0 },
-                    'channel-stereo-1': { name: 'Amplificador 2: Stereo (Voz / Agudos)', speakers: [], mode: 'parallel', finalImp: 0 }
+                    'channel-mono': { name: 'Amplificador 1: Monobloco (Graves)', speakers: [], association: 'parallel', topology: 'associated', finalImp: 0 },
+                    'channel-stereo-1': { name: 'Amplificador 2: Stereo (Voz / Agudos)', speakers: [], association: 'parallel', topology: 'associated', finalImp: 0 }
                 };
             } else if (config === '1-channel') {
                 channelStructure = {
-                    'channel-mono': { name: 'Canal Único Monobloco High Power', speakers: [], mode: 'direct', finalImp: 0 }
+                    'channel-mono': { name: 'Canal Único Monobloco High Power', speakers: [], association: 'direct', topology: 'independent', finalImp: 0 }
                 };
             } else if (config === '5-channel') {
                 channelStructure = {
-                    'channel-1': { name: 'Canal 1 (Porta Diant. L)', speakers: [], mode: 'direct', finalImp: 0 },
-                    'channel-2': { name: 'Canal 2 (Porta Diant. R)', speakers: [], mode: 'direct', finalImp: 0 },
-                    'channel-3': { name: 'Canal 3 (Porta Tras. L)', speakers: [], mode: 'direct', finalImp: 0 },
-                    'channel-4': { name: 'Canal 4 (Porta Tras. R)', speakers: [], mode: 'direct', finalImp: 0 },
-                    'channel-sub': { name: 'Canal 5 (Subwoofer Mono Dedicado)', speakers: [], mode: 'direct', finalImp: 0 }
+                    'channel-1': { name: 'Canal 1 (Porta Diant. L)', speakers: [], association: 'direct', topology: 'independent', finalImp: 0 },
+                    'channel-2': { name: 'Canal 2 (Porta Diant. R)', speakers: [], association: 'direct', topology: 'independent', finalImp: 0 },
+                    'channel-3': { name: 'Canal 3 (Porta Tras. L)', speakers: [], association: 'direct', topology: 'independent', finalImp: 0 },
+                    'channel-4': { name: 'Canal 4 (Porta Tras. R)', speakers: [], association: 'direct', topology: 'independent', finalImp: 0 },
+                    'channel-sub': { name: 'Canal 5 (Subwoofer Mono)', speakers: [], association: 'direct', topology: 'independent', finalImp: 0 }
                 };
             }
 
@@ -700,15 +739,22 @@
 
         function addSpeakerToChannel() {
             const chKey = document.getElementById('targetChannel').value;
-            const type = document.getElementById('spkType').value;
-            const qty = parseInt(document.getElementById('spkQty').value);
+            const topology = document.getElementById('channelTopology').value;
+            const type1 = document.getElementById('spkType1').value;
+            const type2 = document.getElementById('spkType2').value;
             const power = parseFloat(document.getElementById('spkPower').value);
             const imp = parseFloat(document.getElementById('spkImp').value);
-            const mode = document.getElementById('wireMode').value;
+            const assoc = document.getElementById('wiringAssociation').value;
 
             if (channelStructure[chKey]) {
-                channelStructure[chKey].speakers.push({ name: type, qty, power, imp });
-                channelStructure[chKey].mode = mode;
+                let newSpeakers = [{ name: type1, power: power, imp: imp }];
+                if (type2 !== 'none') {
+                    newSpeakers.push({ name: type2, power: power, imp: imp });
+                }
+
+                channelStructure[chKey].speakers = newSpeakers;
+                channelStructure[chKey].association = assoc;
+                channelStructure[chKey].topology = topology;
                 calculateSystem();
             }
         }
@@ -735,34 +781,20 @@
                 let chImpedance = 0;
 
                 if (ch.speakers.length > 0) {
-                    let totalUnits = 0;
                     let baseImp = ch.speakers[0].imp;
 
-                    ch.speakers.forEach(s => {
-                        chPower += (s.qty * s.power);
-                        totalUnits += s.qty;
-                    });
+                    ch.speakers.forEach(s => { chPower += s.power; });
 
-                    if (ch.mode === 'direct') {
+                    if (ch.association === 'direct' || ch.speakers.length === 1) {
                         chImpedance = baseImp;
-                    } else if (ch.mode === 'parallel') {
+                    } else if (ch.association === 'parallel') {
                         let invSum = 0;
-                        ch.speakers.forEach(s => {
-                            invSum += (s.qty / s.imp);
-                        });
+                        ch.speakers.forEach(s => { invSum += (1 / s.imp); });
                         chImpedance = invSum > 0 ? (1 / invSum) : baseImp;
-                    } else if (ch.mode === 'series') {
+                    } else if (ch.association === 'series') {
                         let seriesSum = 0;
-                        ch.speakers.forEach(s => {
-                            seriesSum += (s.qty * s.imp);
-                        });
+                        ch.speakers.forEach(s => { seriesSum += s.imp; });
                         chImpedance = seriesSum;
-                    } else if (ch.mode === 'bridge') {
-                        let invSum = 0;
-                        ch.speakers.forEach(s => {
-                            invSum += (s.qty / s.imp);
-                        });
-                        chImpedance = invSum > 0 ? (1 / invSum) : baseImp;
                     }
 
                     ch.finalImp = chImpedance;
@@ -772,15 +804,17 @@
                     if (chPower > 1000) { cableMM = "4.0 mm² Cobre"; cableAWG = "11 AWG"; }
                     else if (chPower > 400) { cableMM = "2.5 mm² Cobre"; cableAWG = "13 AWG"; }
 
-                    const modeLabel = ch.mode === 'direct' ? 'CANAL ÚNICO' : ch.mode.toUpperCase();
-                    const namesList = ch.speakers.map(s => `${s.qty}x ${s.name}`).join(' + ');
+                    let assocLabel = ch.association === 'direct' ? 'CANAL ÚNICO' : ch.association.toUpperCase();
+                    if (ch.topology === 'bridge') assocLabel = 'BRIDGE / PONTE';
+
+                    const namesList = ch.speakers.map(s => s.name).join(' + ');
 
                     tableBody.innerHTML += `
                         <tr>
                             <td><strong>${namesList}</strong></td>
                             <td><span style="color:var(--accent-cyan); font-weight:bold;">${cableMM}</span></td>
                             <td>${cableAWG}</td>
-                            <td>${modeLabel} (${chImpedance.toFixed(1)} Ω)</td>
+                            <td>${assocLabel} (${chImpedance.toFixed(1)} Ω)</td>
                         </tr>
                     `;
                 }
@@ -791,7 +825,7 @@
                 ch.speakers.forEach((s, idx) => {
                     speakerListHTML += `
                         <div class="channel-speaker-item">
-                            <span>${s.qty}x ${s.name} (${s.power}W RMS - ${s.imp}Ω)</span>
+                            <span>${s.name} (${s.power}W RMS - ${s.imp}Ω)</span>
                             <i class="fa-solid fa-trash btn-remove" title="Remover" onclick="removeSpeakerFromChannel('${chKey}', ${idx})"></i>
                         </div>
                     `;
