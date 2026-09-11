@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AutoSound Studio Pro V6 - Engenharia de Som Automotivo</title>
     
-    <!-- Meta tags para PWA e Mobile -->
+    <!-- Meta tags PWA -->
     <meta name="theme-color" content="#07090e">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="AutoSound">
     
-    <!-- Manifest PWA Embutido -->
+    <!-- Web App Manifest -->
     <link rel="manifest" href='data:application/manifest+json,{"name":"AutoSound Studio Pro","short_name":"AutoSound","start_url":".","display":"standalone","background_color":"#07090e","theme_color":"#07090e","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/3204/3204062.png","sizes":"512x512","type":"image/png"}]}'>
 
     <!-- Fonts & Icons -->
@@ -28,7 +28,6 @@
             --accent-cyan: #00f0ff;
             --accent-green: #00ff88;
             --accent-red: #ff2a5f;
-            --accent-purple: #ab47bc;
             --text-main: #f0f4f8;
             --text-muted: #8290a0;
             --card-inner: #0f131d;
@@ -111,12 +110,12 @@
             margin: 15px auto;
             padding: 0 15px;
             display: grid;
-            grid-template-columns: 420px 1fr 400px;
+            grid-template-columns: 440px 1fr 400px;
             gap: 18px;
         }
 
         @media (max-width: 1500px) {
-            .workspace { grid-template-columns: 380px 1fr; }
+            .workspace { grid-template-columns: 400px 1fr; }
             .catalog-panel { grid-column: 1 / -1; }
         }
 
@@ -320,7 +319,6 @@
             align-items: center;
             text-decoration: none;
             color: inherit;
-            transition: border-color 0.2s;
         }
 
         .product-card:hover { border-color: var(--accent-cyan); }
@@ -411,39 +409,40 @@
 
     <div class="workspace">
         
-        <!-- PAINEL DA ESQUERDA -->
+        <!-- ESQUERDA: CONTROLES -->
         <div class="panel">
             <div class="panel-header">
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
-                <h2>1. Presets de Montagem</h2>
+                <h2>1. Presets de Projetos</h2>
             </div>
             
             <div class="preset-buttons">
-                <div class="btn-preset" onclick="loadPreset('sq_interno')">🔊 Som Interno</div>
-                <div class="btn-preset" onclick="loadPreset('trio_médio')">🎺 Trio Mala</div>
-                <div class="btn-preset" onclick="loadPreset('paredao_heavy')">🔊 Paredão</div>
+                <div class="btn-preset" onclick="loadPreset('sq_interno')">🔊 Interno 4 Portas</div>
+                <div class="btn-preset" onclick="loadPreset('trio_médio')">🎺 Trio Elétrico Mala</div>
+                <div class="btn-preset" onclick="loadPreset('paredao_heavy')">🔊 Paredão / Heavy</div>
             </div>
 
             <div class="panel-header" style="margin-top: 5px;">
                 <i class="fa-solid fa-bolt-lightning"></i>
-                <h2>2. Central & Módulos</h2>
+                <h2>2. Central & Amplificadores</h2>
             </div>
 
             <div class="form-group">
                 <label>Fonte de Sinal / Player</label>
                 <select id="playerSource" class="form-control" onchange="calculateSystem()">
-                    <option value="multimidia">Multimídia RCA (4V Out)</option>
-                    <option value="dsp">Processador DSP (6 Canais)</option>
-                    <option value="cd_player">CD/Bluetooth Player (2V)</option>
+                    <option value="multimidia">Central Multimídia RCA (4V Out)</option>
+                    <option value="dsp">Processador Digital DSP (6 a 8 Canais)</option>
+                    <option value="cd_player">CD/Bluetooth Player High-End (4V)</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label>Arquitetura do Amplificador</label>
                 <select id="ampConfig" class="form-control" onchange="setupChannels()">
-                    <option value="4-channel">Módulo 4 Canais (Stereo / Bridge)</option>
-                    <option value="mono-stereo">Multi-Módulo (1 Mono + 1 Stereo)</option>
-                    <option value="1-channel">Monobloco (1 Canal Mono)</option>
+                    <option value="4-channel">Amplificador 4 Canais (Portas Diant. / Tras. / Bridge)</option>
+                    <option value="mono-stereo">Multi-Amplificador (1 Mono Graves + 1 Stereo Voz)</option>
+                    <option value="1-channel">Amplificador Monobloco High Power (1 Canal Mono)</option>
+                    <option value="5-channel">Amplificador 5 Canais Hybrid (4 Canais + Sub Mono)</option>
                 </select>
             </div>
 
@@ -451,49 +450,55 @@
                 <div class="form-group">
                     <label>Impedância Mín. (Ω)</label>
                     <select id="ampMinImp" class="form-control" onchange="calculateSystem()">
-                        <option value="1">1 Ohm</option>
-                        <option value="2" selected>2 Ohms</option>
-                        <option value="4">4 Ohms</option>
+                        <option value="1">1 Ohm por Canal</option>
+                        <option value="2" selected>2 Ohms por Canal</option>
+                        <option value="4">4 Ohms por Canal</option>
+                        <option value="8">8 Ohms por Canal</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Tensão Operacional</label>
                     <select id="sysVoltage" class="form-control" onchange="calculateSystem()">
-                        <option value="12.6">12.6V (Bateria)</option>
-                        <option value="14.4" selected>14.4V (Fonte/Carro)</option>
+                        <option value="12.6">12.6V (Bateria em Repouso)</option>
+                        <option value="14.4" selected>14.4V (Carro Ligado / Fonte)</option>
                     </select>
                 </div>
             </div>
 
             <div class="panel-header" style="margin-top: 5px;">
                 <i class="fa-solid fa-plug-circle-plus"></i>
-                <h2>3. Conectar Falantes</h2>
+                <h2>3. Conectar Falantes por Saída</h2>
             </div>
 
             <div class="form-group">
-                <label>Canal de Destino</label>
+                <label>Canal / Saída de Destino</label>
                 <select id="targetChannel" class="form-control"></select>
             </div>
 
             <div class="form-group">
-                <label>Tipo de Falante</label>
+                <label>Tipo de Alto-Falante / Via</label>
                 <select id="spkType" class="form-control">
-                    <option value="Subwoofer">Subwoofer (Graves)</option>
-                    <option value="Woofer">Woofer (Graves Secos)</option>
-                    <option value="Driver/Corneta">Driver (Voz Médio)</option>
+                    <option value="Kit 2 Vias (Porta Diant.)">Kit 2 Vias (Porta Dianteira)</option>
+                    <option value="Coaxial/Triaxial (Porta Tras.)">Coaxial/Triaxial (Porta Traseira)</option>
+                    <option value="Falante 6x9 (Tampão)">Alto-Falante 6x9" (Tampão/Mala)</option>
+                    <option value="Subwoofer D2 (Bob. Dupla 2+2)">Subwoofer (Bobina Dupla 2+2Ω)</option>
+                    <option value="Subwoofer D4 (Bob. Dupla 4+4)">Subwoofer (Bobina Dupla 4+4Ω)</option>
+                    <option value="Subwoofer Simples 4Ω">Subwoofer (Bobina Simples 4Ω)</option>
+                    <option value="Woofer 12/15 (Grave Seco)">Woofer 12" / 15" (Grave Seco)</option>
+                    <option value="Médio Grave 8/10">Médio Grave 8" ou 10" (Médio Alto)</option>
+                    <option value="Driver de Compressão">Driver de Compressão (Corneta)</option>
                     <option value="Super Tweeter">Super Tweeter (Agudos)</option>
-                    <option value="Kit 2 Vias">Kit 2 Vias (Portas)</option>
                 </select>
             </div>
 
             <div class="grid-2">
                 <div class="form-group">
-                    <label>Qtd. Falantes</label>
+                    <label>Quantidade</label>
                     <input type="number" id="spkQty" class="form-control" value="1" min="1" max="12">
                 </div>
                 <div class="form-group">
-                    <label>Potência (RMS Unit.)</label>
-                    <input type="number" id="spkPower" class="form-control" value="350" step="50">
+                    <label>Potência RMS Unit.</label>
+                    <input type="number" id="spkPower" class="form-control" value="100" step="10">
                 </div>
             </div>
 
@@ -507,24 +512,24 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Esquema de Ligação</label>
+                    <label>Ligação neste Canal</label>
                     <select id="wireMode" class="form-control">
-                        <option value="direct">Canal Único (1 Falante / Canal)</option>
-                        <option value="parallel">Em Paralelo (Dividi Ω)</option>
-                        <option value="series">Em Série (Soma Ω)</option>
-                        <option value="bridge">Bridge (Canais 3+4)</option>
+                        <option value="direct">Canal Único (1 Falante Dedicado)</option>
+                        <option value="parallel">Em Paralelo (Dividi Impedância)</option>
+                        <option value="series">Em Série (Soma Impedância)</option>
+                        <option value="bridge">Bridge / Ponte (Canais 3+4)</option>
                     </select>
                 </div>
             </div>
 
             <button class="btn btn-primary" onclick="addSpeakerToChannel()">
-                <i class="fa-solid fa-plus-circle"></i> Adicionar ao Canal
+                <i class="fa-solid fa-plus-circle"></i> Conectar Falante ao Amplificador
             </button>
 
             <div id="channelsAllocated"></div>
         </div>
 
-        <!-- PAINEL CENTRAL -->
+        <!-- CENTRO: MÉTRICAS E ESQUEMA -->
         <div class="panel">
             <div class="panel-header">
                 <i class="fa-solid fa-chart-pie"></i>
@@ -533,7 +538,7 @@
 
             <div class="metrics-grid">
                 <div class="metric-card">
-                    <div class="metric-lbl">Potência RMS</div>
+                    <div class="metric-lbl">Potência Total</div>
                     <div class="metric-val" id="valTotalPower">0 W</div>
                 </div>
                 <div class="metric-card red">
@@ -555,10 +560,10 @@
                 <table class="wiring-table">
                     <thead>
                         <tr>
-                            <th>Falante / Via</th>
+                            <th>Falantes / Vias no Canal</th>
                             <th>Fiação Recomendada</th>
                             <th>Bitola AWG</th>
-                            <th>Esquema / Impedância</th>
+                            <th>Modo / Impedância Final</th>
                         </tr>
                     </thead>
                     <tbody id="wiringTableBody"></tbody>
@@ -567,7 +572,7 @@
 
             <div class="panel-header" style="margin-top: 5px;">
                 <i class="fa-solid fa-network-wired"></i>
-                <h2>5. Esquema Elétrico Visual</h2>
+                <h2>5. Esquema Elétrico Visual em Tempo Real</h2>
             </div>
 
             <div class="canvas-container">
@@ -575,11 +580,11 @@
             </div>
         </div>
 
-        <!-- PAINEL DA DIREITA: PRODUTOS COMPLETOS DO MERCADO -->
+        <!-- DIREITA: CATÁLOGO -->
         <div class="panel catalog-panel">
             <div class="panel-header">
                 <i class="fa-solid fa-boxes-packing"></i>
-                <h2>6. Fabricantes & Equipamentos Recomendados</h2>
+                <h2>6. Fabricantes & Modelos Recomendados</h2>
             </div>
             <div class="products-grid" id="productsCatalog"></div>
         </div>
@@ -621,25 +626,36 @@
             if (type === 'sq_interno') {
                 document.getElementById('ampConfig').value = '4-channel';
                 setupChannels();
-                channelStructure['channel-1'].speakers = [{ name: 'Kit 2 Vias L', qty: 1, power: 90, imp: 4 }];
-                channelStructure['channel-1'].mode = 'direct';
-                channelStructure['channel-2'].speakers = [{ name: 'Kit 2 Vias R', qty: 1, power: 90, imp: 4 }];
-                channelStructure['channel-2'].mode = 'direct';
-                channelStructure['channel-3-4'].speakers = [{ name: 'Subwoofer 10"', qty: 1, power: 350, imp: 4 }];
+                
+                channelStructure['channel-1'].speakers = [
+                    { name: 'Kit 2 Vias (Porta Diant.)', qty: 1, power: 80, imp: 4 },
+                    { name: 'Coaxial (Porta Tras.)', qty: 1, power: 60, imp: 4 }
+                ];
+                channelStructure['channel-1'].mode = 'parallel';
+
+                channelStructure['channel-2'].speakers = [
+                    { name: 'Kit 2 Vias (Porta Diant.)', qty: 1, power: 80, imp: 4 },
+                    { name: 'Coaxial (Porta Tras.)', qty: 1, power: 60, imp: 4 }
+                ];
+                channelStructure['channel-2'].mode = 'parallel';
+
+                channelStructure['channel-3-4'].speakers = [
+                    { name: 'Subwoofer Simples 4Ω', qty: 1, power: 350, imp: 4 }
+                ];
                 channelStructure['channel-3-4'].mode = 'bridge';
             } else if (type === 'trio_médio') {
                 document.getElementById('ampConfig').value = 'mono-stereo';
                 setupChannels();
-                channelStructure['channel-mono'].speakers = [{ name: 'Woofer 15"', qty: 2, power: 1200, imp: 4 }];
+                channelStructure['channel-mono'].speakers = [{ name: 'Woofer 12/15 (Grave Seco)', qty: 2, power: 1200, imp: 4 }];
                 channelStructure['channel-mono'].mode = 'parallel';
-                channelStructure['channel-stereo-1'].speakers = [{ name: 'Driver/Corneta', qty: 2, power: 100, imp: 8 }];
-                channelStructure['channel-stereo-1'].mode = 'direct';
+                channelStructure['channel-stereo-1'].speakers = [{ name: 'Driver de Compressão', qty: 2, power: 100, imp: 8 }];
+                channelStructure['channel-stereo-1'].mode = 'parallel';
             } else if (type === 'paredao_heavy') {
                 document.getElementById('ampConfig').value = 'mono-stereo';
                 setupChannels();
-                channelStructure['channel-mono'].speakers = [{ name: 'Woofer 18"', qty: 4, power: 2500, imp: 2 }];
+                channelStructure['channel-mono'].speakers = [{ name: 'Woofer 12/15 (Grave Seco)', qty: 4, power: 2500, imp: 2 }];
                 channelStructure['channel-mono'].mode = 'parallel';
-                channelStructure['channel-stereo-1'].speakers = [{ name: 'Médio Grave 8"', qty: 4, power: 400, imp: 8 }];
+                channelStructure['channel-stereo-1'].speakers = [{ name: 'Médio Grave 8/10', qty: 4, power: 400, imp: 8 }];
                 channelStructure['channel-stereo-1'].mode = 'parallel';
             }
             calculateSystem();
@@ -652,18 +668,26 @@
 
             if (config === '4-channel') {
                 channelStructure = {
-                    'channel-1': { name: 'Canal 1 (Stereo L)', speakers: [], mode: 'direct', finalImp: 0 },
-                    'channel-2': { name: 'Canal 2 (Stereo R)', speakers: [], mode: 'direct', finalImp: 0 },
-                    'channel-3-4': { name: 'Canais 3 & 4 (Bridge)', speakers: [], mode: 'bridge', finalImp: 0 }
+                    'channel-1': { name: 'Canal 1 (Lado Esquerdo Front/Rear)', speakers: [], mode: 'parallel', finalImp: 0 },
+                    'channel-2': { name: 'Canal 2 (Lado Direito Front/Rear)', speakers: [], mode: 'parallel', finalImp: 0 },
+                    'channel-3-4': { name: 'Canais 3 & 4 (Bridge Subwoofer)', speakers: [], mode: 'bridge', finalImp: 0 }
                 };
             } else if (config === 'mono-stereo') {
                 channelStructure = {
-                    'channel-mono': { name: 'Módulo 1: Monobloco', speakers: [], mode: 'parallel', finalImp: 0 },
-                    'channel-stereo-1': { name: 'Módulo 2: Stereo Voz', speakers: [], mode: 'direct', finalImp: 0 }
+                    'channel-mono': { name: 'Amplificador 1: Monobloco (Graves)', speakers: [], mode: 'parallel', finalImp: 0 },
+                    'channel-stereo-1': { name: 'Amplificador 2: Stereo (Voz / Agudos)', speakers: [], mode: 'parallel', finalImp: 0 }
                 };
             } else if (config === '1-channel') {
                 channelStructure = {
-                    'channel-mono': { name: 'Canal Único Monobloco', speakers: [], mode: 'direct', finalImp: 0 }
+                    'channel-mono': { name: 'Canal Único Monobloco High Power', speakers: [], mode: 'direct', finalImp: 0 }
+                };
+            } else if (config === '5-channel') {
+                channelStructure = {
+                    'channel-1': { name: 'Canal 1 (Porta Diant. L)', speakers: [], mode: 'direct', finalImp: 0 },
+                    'channel-2': { name: 'Canal 2 (Porta Diant. R)', speakers: [], mode: 'direct', finalImp: 0 },
+                    'channel-3': { name: 'Canal 3 (Porta Tras. L)', speakers: [], mode: 'direct', finalImp: 0 },
+                    'channel-4': { name: 'Canal 4 (Porta Tras. R)', speakers: [], mode: 'direct', finalImp: 0 },
+                    'channel-sub': { name: 'Canal 5 (Subwoofer Mono Dedicado)', speakers: [], mode: 'direct', finalImp: 0 }
                 };
             }
 
@@ -711,18 +735,35 @@
                 let chImpedance = 0;
 
                 if (ch.speakers.length > 0) {
-                    let totalQty = 0;
+                    let totalUnits = 0;
                     let baseImp = ch.speakers[0].imp;
 
                     ch.speakers.forEach(s => {
                         chPower += (s.qty * s.power);
-                        totalQty += s.qty;
+                        totalUnits += s.qty;
                     });
 
-                    if (ch.mode === 'direct') chImpedance = baseImp;
-                    else if (ch.mode === 'parallel') chImpedance = baseImp / totalQty;
-                    else if (ch.mode === 'series') chImpedance = baseImp * totalQty;
-                    else if (ch.mode === 'bridge') chImpedance = baseImp / totalQty;
+                    if (ch.mode === 'direct') {
+                        chImpedance = baseImp;
+                    } else if (ch.mode === 'parallel') {
+                        let invSum = 0;
+                        ch.speakers.forEach(s => {
+                            invSum += (s.qty / s.imp);
+                        });
+                        chImpedance = invSum > 0 ? (1 / invSum) : baseImp;
+                    } else if (ch.mode === 'series') {
+                        let seriesSum = 0;
+                        ch.speakers.forEach(s => {
+                            seriesSum += (s.qty * s.imp);
+                        });
+                        chImpedance = seriesSum;
+                    } else if (ch.mode === 'bridge') {
+                        let invSum = 0;
+                        ch.speakers.forEach(s => {
+                            invSum += (s.qty / s.imp);
+                        });
+                        chImpedance = invSum > 0 ? (1 / invSum) : baseImp;
+                    }
 
                     ch.finalImp = chImpedance;
 
@@ -732,10 +773,11 @@
                     else if (chPower > 400) { cableMM = "2.5 mm² Cobre"; cableAWG = "13 AWG"; }
 
                     const modeLabel = ch.mode === 'direct' ? 'CANAL ÚNICO' : ch.mode.toUpperCase();
+                    const namesList = ch.speakers.map(s => `${s.qty}x ${s.name}`).join(' + ');
 
                     tableBody.innerHTML += `
                         <tr>
-                            <td><strong>${ch.speakers[0].name}</strong> (${totalQty}x)</td>
+                            <td><strong>${namesList}</strong></td>
                             <td><span style="color:var(--accent-cyan); font-weight:bold;">${cableMM}</span></td>
                             <td>${cableAWG}</td>
                             <td>${modeLabel} (${chImpedance.toFixed(1)} Ω)</td>
@@ -749,8 +791,8 @@
                 ch.speakers.forEach((s, idx) => {
                     speakerListHTML += `
                         <div class="channel-speaker-item">
-                            <span>${s.qty}x ${s.name} (${s.power}W RMS)</span>
-                            <i class="fa-solid fa-trash btn-remove" title="Remover falante" onclick="removeSpeakerFromChannel('${chKey}', ${idx})"></i>
+                            <span>${s.qty}x ${s.name} (${s.power}W RMS - ${s.imp}Ω)</span>
+                            <i class="fa-solid fa-trash btn-remove" title="Remover" onclick="removeSpeakerFromChannel('${chKey}', ${idx})"></i>
                         </div>
                     `;
                 });
@@ -761,7 +803,7 @@
                             <span>${ch.name}</span>
                             <span>${chImpedance.toFixed(1)} Ω</span>
                         </div>
-                        ${speakerListHTML.length > 0 ? speakerListHTML : '<div style="font-size:0.75rem; color:var(--text-muted)">Nenhum falante conectado.</div>'}
+                        ${speakerListHTML.length > 0 ? speakerListHTML : '<div style="font-size:0.75rem; color:var(--text-muted)">Nenhum alto-falante conectado neste canal.</div>'}
                     </div>
                 `;
             }
@@ -814,14 +856,15 @@
 
             drawBox(ctx, 140, midY - 40, 100, 80, '#090d14', '#ff5500', 'AMPLIFICADOR', `${totalPower}W`);
 
-            let chY = midY - 20;
+            let chY = midY - 25;
             const outX = 240;
 
             for (let chKey in channelStructure) {
                 const ch = channelStructure[chKey];
                 if (ch.speakers.length > 0) {
                     drawWire(ctx, outX, chY, outX + 30, chY, '#00ff88', 2);
-                    drawBox(ctx, outX + 30, chY - 12, 110, 26, '#0f131d', '#00f0ff', `${ch.speakers[0].name}`, `${ch.finalImp.toFixed(1)}Ω`);
+                    const label = ch.speakers[0].name.split('(')[0];
+                    drawBox(ctx, outX + 30, chY - 12, 120, 26, '#0f131d', '#00f0ff', `${label}`, `${ch.finalImp.toFixed(1)}Ω`);
                     chY += 32;
                 }
             }
@@ -849,19 +892,20 @@
 
             if (power <= 1200) {
                 products = [
-                    { name: 'Pioneer DMH-Z5380TV', brand: 'Pioneer', url: 'https://www.pioneer.com.br', spec: 'Central Multimídia RCA 4V', cat: 'Player / Multimídia', icon: 'fa-tv' },
-                    { name: 'Taramps TS 400x4', brand: 'Taramps', url: 'https://www.taramps.com.br', spec: '4 Canais 100W RMS @ 2Ω', cat: 'Amplificador', icon: 'fa-bolt' },
-                    { name: 'Pioneer TS-W312S4 12"', brand: 'Pioneer', url: 'https://www.pioneer.com.br', spec: 'Subwoofer 500W RMS', cat: 'Subwoofer', icon: 'fa-bullhorn' },
-                    { name: 'Technoise Cabo Cobre 16mm²', brand: 'Technoise', url: 'https://www.technoise.com.br', spec: 'Cabo Alimentação 100% Cobre', cat: 'Cabeamento Força', icon: 'fa-plug' },
-                    { name: 'Technoise Cabo RCA 5m', brand: 'Technoise', url: 'https://www.technoise.com.br', spec: 'Blindagem Dupla de Sinal', cat: 'Cabeamento Áudio', icon: 'fa-wire-group' }
+                    { name: 'Pioneer DMH-Z5380TV', brand: 'Pioneer', url: 'https://www.pioneer.com.br', spec: 'Multimídia 2DIN com RCA 4V', cat: 'Player / Multimídia', icon: 'fa-tv' },
+                    { name: 'Taramps TS 400x4 / DS 800x4', brand: 'Taramps', url: 'https://www.taramps.com.br', spec: '4 Canais Stereo / Bridge 2Ω', cat: 'Amplificador', icon: 'fa-bolt' },
+                    { name: 'Soundigital SD 800.4 EVOX 6', brand: 'Soundigital', url: 'https://soundigital.com.br', spec: '4 Canais de Alta Definição', cat: 'Amplificador', icon: 'fa-bolt' },
+                    { name: 'Hertz DSK 165.3 Kit 2 Vias', brand: 'Hertz', url: 'https://www.hertz-audio.com', spec: 'Kit 2 Vias 160W RMS (Portas)', cat: 'Voz / Portas', icon: 'fa-volume-high' },
+                    { name: 'Pioneer TS-W312S4 12"', brand: 'Pioneer', url: 'https://www.pioneer.com.br', spec: 'Subwoofer 500W RMS Bob. Simples', cat: 'Subwoofer', icon: 'fa-bullhorn' },
+                    { name: 'Technoise Cabo Cobre 16mm²', brand: 'Technoise', url: 'https://www.technoise.com.br', spec: 'Cabo Alimentação 100% Cobre', cat: 'Cabeamento Força', icon: 'fa-plug' }
                 ];
             } else {
                 products = [
                     { name: 'Stetsom STX2448 DSP', brand: 'Stetsom', url: 'https://www.stetsom.com.br', spec: 'Processador Digital 6 Canais', cat: 'Processador DSP', icon: 'fa-sliders' },
-                    { name: 'Soundigital SD 3000.1', brand: 'Soundigital', url: 'https://soundigital.com.br', spec: '3000W RMS Monobloco @ 1Ω / 2Ω', cat: 'Amplificador Mono', icon: 'fa-bolt' },
-                    { name: 'Eros Target Bass 3.0K', brand: 'Eros', url: 'https://www.eros.com.br', spec: '1500W RMS Woofer 15"', cat: 'Woofer Trio', icon: 'fa-bullhorn' },
-                    { name: 'Usina 120A Smart Bivolt', brand: 'Usina Spark', url: 'https://www.sparkpower.com.br', spec: 'Fonte Automotiva com Voltímetro', cat: 'Alimentação', icon: 'fa-charging-station' },
-                    { name: 'Technoise Cabo Cobre 35mm²', brand: 'Technoise', url: 'https://www.technoise.com.br', spec: 'Cabo Flexível de Alta Condutividade', cat: 'Cabeamento Força', icon: 'fa-plug' }
+                    { name: 'Soundigital SD 3000.1 EVOX 5', brand: 'Soundigital', url: 'https://soundigital.com.br', spec: '3000W RMS Monobloco @ 1Ω / 2Ω', cat: 'Amplificador Mono', icon: 'fa-bolt' },
+                    { name: 'Banda Viking 5000 / 8000', brand: 'Banda Audioparts', url: 'https://bandaaudioparts.com.br', spec: 'Amplificador High Power para Woofers', cat: 'Amplificador Heavy', icon: 'fa-bolt' },
+                    { name: 'Eros Target Bass 3.0K / 4.0K', brand: 'Eros', url: 'https://www.eros.com.br', spec: 'Woofer 15" / 18" Alta Pressão', cat: 'Woofer Trio', icon: 'fa-bullhorn' },
+                    { name: 'Usina 120A Smart Bivolt', brand: 'Usina Spark', url: 'https://www.sparkpower.com.br', spec: 'Fonte Automotiva com Voltímetro', cat: 'Alimentação', icon: 'fa-charging-station' }
                 ];
             }
 
