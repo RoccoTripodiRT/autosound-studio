@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AutoSound Studio V10 - Diagrama Gráfico Ilustrado</title>
+    <title>AutoSound Studio V11 - Multi-Componentes & Associação Manual</title>
     
     <meta name="theme-color" content="#07090e">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="AutoSound">
     
-    <link rel="manifest" href='data:application/manifest+json,{"name":"AutoSound Studio V10","short_name":"AutoSound","start_url":".","display":"standalone","background_color":"#07090e","theme_color":"#07090e","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/3204/3204062.png","sizes":"512x512","type":"image/png"}]}'>
+    <link rel="manifest" href='data:application/manifest+json,{"name":"AutoSound Studio V11","short_name":"AutoSound","start_url":".","display":"standalone","background_color":"#07090e","theme_color":"#07090e","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/3204/3204062.png","sizes":"512x512","type":"image/png"}]}'>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -148,11 +149,11 @@
         <div class="brand">
             <i class="fa-solid fa-sliders"></i>
             <div>
-                <h1 class="brand-title">AUTOSOUND <span>STUDIO V10</span></h1>
+                <h1 class="brand-title">AUTOSOUND <span>STUDIO V11</span></h1>
             </div>
         </div>
         <div style="font-size: 0.85rem; color: var(--accent-cyan);" class="tech-font">
-            <i class="fa-solid fa-microchip"></i> Diagrama Gráfico de Alta Fidelidade com Bitolas em Tempo Real
+            <i class="fa-solid fa-microchip"></i> Multi-Componentes com Associação Manual por Canal
         </div>
     </header>
 
@@ -166,7 +167,7 @@
             </div>
             
             <div class="preset-buttons">
-                <div class="btn-preset" onclick="loadPreset('sq_interno')">🔊 SQ 4 Portas + Sub</div>
+                <div class="btn-preset" onclick="loadPreset('sq_interno')">🔊 SQ Kit+Coaxial + Sub</div>
                 <div class="btn-preset" onclick="loadPreset('trio_médio')">🎺 Trio Mala (Stereo/Mono)</div>
                 <div class="btn-preset" onclick="loadPreset('paredao_heavy')">🔊 Paredão Heavy Bass</div>
             </div>
@@ -214,19 +215,20 @@
                 </div>
             </div>
 
+            <!-- SETOR 3 ATUALIZADO: MULTI-EQUIPAMENTOS COM ASSOCIAÇÃO MANUAL -->
             <div class="panel-header" style="margin-top: 5px;">
                 <i class="fa-solid fa-plug-circle-plus"></i>
-                <h2>3. Adicionar Equipamentos ao Canal</h2>
+                <h2>3. Atribuir Equipamento(s) ao Canal</h2>
             </div>
 
             <div class="form-group">
-                <label>Canal / Saída do Amplificador</label>
+                <label>Canal / Saída de Destino</label>
                 <select id="targetChannel" class="form-control"></select>
             </div>
 
             <div class="sub-config-box">
                 <div class="form-group">
-                    <label>Equipamento a Inserir</label>
+                    <label>Equipamento Principal (Via 1)</label>
                     <select id="spkType1" class="form-control">
                         <option value="Kit 2 Vias (Porta Diant.)">Kit 2 Vias (Porta Dianteira)</option>
                         <option value="Coaxial (Porta Tras.)">Coaxial (Porta Traseira)</option>
@@ -242,38 +244,57 @@
 
                 <div class="grid-2">
                     <div class="form-group">
-                        <label>Qtd. Peças</label>
-                        <input type="number" id="spkQty" class="form-control" value="1" min="1" max="8">
+                        <label>Potência RMS (Principal)</label>
+                        <input type="number" id="spkPower1" class="form-control" value="80" step="10">
                     </div>
                     <div class="form-group">
-                        <label>Potência RMS Cad.</label>
-                        <input type="number" id="spkPower" class="form-control" value="100" step="10">
-                    </div>
-                </div>
-
-                <div class="grid-2">
-                    <div class="form-group">
-                        <label>Impedância Unit.</label>
-                        <select id="spkImp" class="form-control">
+                        <label>Impedância (Principal)</label>
+                        <select id="spkImp1" class="form-control">
                             <option value="2">2 Ohms</option>
                             <option value="4" selected>4 Ohms</option>
                             <option value="8">8 Ohms</option>
                         </select>
                     </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 6px;">
+                    <label>Equipamento Secundário (Opcional - Ex: Coaxial)</label>
+                    <select id="spkType2" class="form-control">
+                        <option value="none">-- Nenhum (Apenas Equipamento Principal) --</option>
+                        <option value="Coaxial (Porta Tras.)" selected>Coaxial (Porta Traseira)</option>
+                        <option value="Kit 2 Vias (Porta Diant.)">Kit 2 Vias (Porta Dianteira)</option>
+                        <option value="Driver de Compressão">Driver de Compressão (Corneta)</option>
+                        <option value="Super Tweeter">Super Tweeter (Agudos)</option>
+                    </select>
+                </div>
+
+                <div class="grid-2" id="secFields">
                     <div class="form-group">
-                        <label>Ligação Elétrica</label>
-                        <select id="wiringAssociation" class="form-control">
-                            <option value="parallel">Em Paralelo (Dividi Ω)</option>
-                            <option value="series">Em Série (Soma Ω)</option>
-                            <option value="direct">Canal Único (Dedicado)</option>
-                            <option value="bridge">Bridge / Ponte (Canais Somados)</option>
+                        <label>Potência RMS (Secundário)</label>
+                        <input type="number" id="spkPower2" class="form-control" value="60" step="10">
+                    </div>
+                    <div class="form-group">
+                        <label>Impedância (Secundário)</label>
+                        <select id="spkImp2" class="form-control">
+                            <option value="2">2 Ohms</option>
+                            <option value="4" selected>4 Ohms</option>
+                            <option value="8">8 Ohms</option>
                         </select>
                     </div>
                 </div>
             </div>
 
-            <button class="btn btn-primary" onclick="addSpeakerToChannel()">
-                <i class="fa-solid fa-plus-circle"></i> Conectar ao Canal Selecionado
+            <div class="form-group">
+                <label>Tipo de Ligação Elétrica entre os Componentes</label>
+                <select id="wiringAssociation" class="form-control">
+                    <option value="parallel">Em Paralelo (Divide a impedância - Ex: 4Ω + 4Ω = 2Ω)</option>
+                    <option value="series">Em Série / Sequencial (Soma a impedância - Ex: 4Ω + 4Ω = 8Ω)</option>
+                    <option value="direct">Canal Único / Sem Associação (Apenas Principal)</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary" onclick="addEquipmentGroupToChannel()">
+                <i class="fa-solid fa-plus-circle"></i> Adicionar ao Canal Selecionado
             </button>
 
             <div id="channelsAllocated"></div>
@@ -319,10 +340,10 @@
                     <thead>
                         <tr>
                             <th>Módulo & Saída</th>
-                            <th>Equipamentos Conectados</th>
-                            <th>Fiação Recomendada</th>
+                            <th>Equipamentos no Canal</th>
+                            <th>Bitola Fio Saída</th>
                             <th>Bitola AWG</th>
-                            <th>Impedância Resultante</th>
+                            <th>Associação & Impedância</th>
                         </tr>
                     </thead>
                     <tbody id="wiringTableBody"></tbody>
@@ -364,40 +385,53 @@
                 document.getElementById('ampConfig').value = 'multi-2-amps';
                 setupChannels();
                 
-                channelStructure['amp1-mono'].speakers = [{ name: 'Subwoofer 12" D4', qty: 1, power: 400, imp: 2 }];
-                channelStructure['amp1-mono'].association = 'parallel';
+                channelStructure['amp1-mono'].groups = [{
+                    items: [{ name: 'Subwoofer 12" D4', power: 400, imp: 2 }],
+                    association: 'parallel', finalImp: 2, totalPower: 400
+                }];
 
-                channelStructure['amp2-ch1'].speakers = [
-                    { name: 'Kit 2 Vias (Porta Diant.)', qty: 1, power: 80, imp: 4 },
-                    { name: 'Coaxial (Porta Tras.)', qty: 1, power: 60, imp: 4 }
-                ];
-                channelStructure['amp2-ch1'].association = 'parallel';
+                // Exemplo: Canal 1 com Kit 2 Vias + Coaxial em Paralelo
+                channelStructure['amp2-ch1'].groups = [{
+                    items: [
+                        { name: 'Kit 2 Vias (Porta Diant.)', power: 80, imp: 4 },
+                        { name: 'Coaxial (Porta Tras.)', power: 60, imp: 4 }
+                    ],
+                    association: 'parallel', finalImp: 2, totalPower: 140
+                }];
 
-                channelStructure['amp2-ch2'].speakers = [
-                    { name: 'Kit 2 Vias (Porta Diant.)', qty: 1, power: 80, imp: 4 },
-                    { name: 'Coaxial (Porta Tras.)', qty: 1, power: 60, imp: 4 }
-                ];
-                channelStructure['amp2-ch2'].association = 'parallel';
+                channelStructure['amp2-ch2'].groups = [{
+                    items: [
+                        { name: 'Kit 2 Vias (Porta Diant.)', power: 80, imp: 4 },
+                        { name: 'Coaxial (Porta Tras.)', power: 60, imp: 4 }
+                    ],
+                    association: 'parallel', finalImp: 2, totalPower: 140
+                }];
 
             } else if (type === 'trio_médio') {
                 document.getElementById('ampConfig').value = 'multi-2-amps';
                 setupChannels();
-                channelStructure['amp1-mono'].speakers = [{ name: 'Woofer 15" (Grave Seco)', qty: 2, power: 1200, imp: 4 }];
-                channelStructure['amp1-mono'].association = 'parallel';
-
-                channelStructure['amp2-ch1'].speakers = [
-                    { name: 'Driver de Compressão', qty: 2, power: 100, imp: 8 },
-                    { name: 'Super Tweeter', qty: 2, power: 100, imp: 8 }
-                ];
-                channelStructure['amp2-ch1'].association = 'parallel';
+                channelStructure['amp1-mono'].groups = [{
+                    items: [{ name: 'Woofer 15" (Grave Seco)', power: 1200, imp: 4 }],
+                    association: 'parallel', finalImp: 4, totalPower: 1200
+                }];
+                channelStructure['amp2-ch1'].groups = [{
+                    items: [
+                        { name: 'Driver de Compressão', power: 100, imp: 8 },
+                        { name: 'Super Tweeter', power: 100, imp: 8 }
+                    ],
+                    association: 'parallel', finalImp: 4, totalPower: 200
+                }];
             } else if (type === 'paredao_heavy') {
                 document.getElementById('ampConfig').value = 'multi-2-amps';
                 setupChannels();
-                channelStructure['amp1-mono'].speakers = [{ name: 'Woofer 15" (Grave Seco)', qty: 4, power: 2500, imp: 2 }];
-                channelStructure['amp1-mono'].association = 'parallel';
-
-                channelStructure['amp2-ch1'].speakers = [{ name: 'Médio Grave 8"', qty: 4, power: 400, imp: 8 }];
-                channelStructure['amp2-ch1'].association = 'parallel';
+                channelStructure['amp1-mono'].groups = [{
+                    items: [{ name: 'Woofer 15" (Grave Seco)', power: 2500, imp: 2 }],
+                    association: 'parallel', finalImp: 2, totalPower: 2500
+                }];
+                channelStructure['amp2-ch1'].groups = [{
+                    items: [{ name: 'Médio Grave 8"', power: 400, imp: 8 }],
+                    association: 'direct', finalImp: 8, totalPower: 400
+                }];
             }
             calculateSystem();
         }
@@ -409,29 +443,29 @@
 
             if (config === 'multi-2-amps') {
                 channelStructure = {
-                    'amp1-mono': { ampName: 'Amp Mono (Sub)', chName: 'Canal Monobloco', speakers: [], association: 'parallel', finalImp: 0 },
-                    'amp2-ch1': { ampName: 'Amp Stereo 4-CH', chName: 'Canal 1 (Lado Esq)', speakers: [], association: 'parallel', finalImp: 0 },
-                    'amp2-ch2': { ampName: 'Amp Stereo 4-CH', chName: 'Canal 2 (Lado Dir)', speakers: [], association: 'parallel', finalImp: 0 },
-                    'amp2-ch3': { ampName: 'Amp Stereo 4-CH', chName: 'Canal 3 (Trás Esq)', speakers: [], association: 'direct', finalImp: 0 },
-                    'amp2-ch4': { ampName: 'Amp Stereo 4-CH', chName: 'Canal 4 (Trás Dir)', speakers: [], association: 'direct', finalImp: 0 }
+                    'amp1-mono': { ampName: 'Amp Mono (Sub)', chName: 'Canal Monobloco', groups: [] },
+                    'amp2-ch1': { ampName: 'Amp Stereo 4-CH', chName: 'Canal 1 (Lado Esq)', groups: [] },
+                    'amp2-ch2': { ampName: 'Amp Stereo 4-CH', chName: 'Canal 2 (Lado Dir)', groups: [] },
+                    'amp2-ch3': { ampName: 'Amp Stereo 4-CH', chName: 'Canal 3 (Trás Esq)', groups: [] },
+                    'amp2-ch4': { ampName: 'Amp Stereo 4-CH', chName: 'Canal 4 (Trás Dir)', groups: [] }
                 };
             } else if (config === '4-channel') {
                 channelStructure = {
-                    'amp1-ch1': { ampName: 'Amp 4-Canais', chName: 'Canal 1 (Diant. Esq)', speakers: [], association: 'direct', finalImp: 0 },
-                    'amp1-ch2': { ampName: 'Amp 4-Canais', chName: 'Canal 2 (Diant. Dir)', speakers: [], association: 'direct', finalImp: 0 },
-                    'amp1-ch3-4': { ampName: 'Amp 4-Canais', chName: 'Canais 3+4 (Bridge Sub)', speakers: [], association: 'bridge', finalImp: 0 }
+                    'amp1-ch1': { ampName: 'Amp 4-Canais', chName: 'Canal 1 (Diant. Esq)', groups: [] },
+                    'amp1-ch2': { ampName: 'Amp 4-Canais', chName: 'Canal 2 (Diant. Dir)', groups: [] },
+                    'amp1-ch3-4': { ampName: 'Amp 4-Canais', chName: 'Canais 3+4 (Bridge Sub)', groups: [] }
                 };
             } else if (config === '1-channel') {
                 channelStructure = {
-                    'amp1-mono': { ampName: 'Amp Monobloco', chName: 'Canal Único High Power', speakers: [], association: 'parallel', finalImp: 0 }
+                    'amp1-mono': { ampName: 'Amp Monobloco', chName: 'Canal Único High Power', groups: [] }
                 };
             } else if (config === '5-channel') {
                 channelStructure = {
-                    'amp1-ch1': { ampName: 'Amp 5-Canais', chName: 'Canal 1 (Diant. Esq)', speakers: [], association: 'direct', finalImp: 0 },
-                    'amp1-ch2': { ampName: 'Amp 5-Canais', chName: 'Canal 2 (Diant. Dir)', speakers: [], association: 'direct', finalImp: 0 },
-                    'amp1-ch3': { ampName: 'Amp 5-Canais', chName: 'Canal 3 (Tras. Esq)', speakers: [], association: 'direct', finalImp: 0 },
-                    'amp1-ch4': { ampName: 'Amp 5-Canais', chName: 'Canal 4 (Tras. Dir)', speakers: [], association: 'direct', finalImp: 0 },
-                    'amp1-sub': { ampName: 'Amp 5-Canais', chName: 'Canal 5 (Sub Mono)', speakers: [], association: 'direct', finalImp: 0 }
+                    'amp1-ch1': { ampName: 'Amp 5-Canais', chName: 'Canal 1 (Diant. Esq)', groups: [] },
+                    'amp1-ch2': { ampName: 'Amp 5-Canais', chName: 'Canal 2 (Diant. Dir)', groups: [] },
+                    'amp1-ch3': { ampName: 'Amp 5-Canais', chName: 'Canal 3 (Tras. Esq)', groups: [] },
+                    'amp1-ch4': { ampName: 'Amp 5-Canais', chName: 'Canal 4 (Tras. Dir)', groups: [] },
+                    'amp1-sub': { ampName: 'Amp 5-Canais', chName: 'Canal 5 (Sub Mono)', groups: [] }
                 };
             }
 
@@ -442,24 +476,50 @@
             calculateSystem();
         }
 
-        function addSpeakerToChannel() {
+        function addEquipmentGroupToChannel() {
             const chKey = document.getElementById('targetChannel').value;
-            const type1 = document.getElementById('spkType1').value;
-            const qty = parseInt(document.getElementById('spkQty').value);
-            const power = parseFloat(document.getElementById('spkPower').value);
-            const imp = parseFloat(document.getElementById('spkImp').value);
+            const t1 = document.getElementById('spkType1').value;
+            const p1 = parseFloat(document.getElementById('spkPower1').value);
+            const i1 = parseFloat(document.getElementById('spkImp1').value);
+
+            const t2 = document.getElementById('spkType2').value;
+            const p2 = parseFloat(document.getElementById('spkPower2').value);
+            const i2 = parseFloat(document.getElementById('spkImp2').value);
+
             const assoc = document.getElementById('wiringAssociation').value;
 
+            let items = [{ name: t1, power: p1, imp: i1 }];
+            let totalPower = p1;
+
+            if (t2 !== 'none') {
+                items.push({ name: t2, power: p2, imp: i2 });
+                totalPower += p2;
+            }
+
+            let finalImp = i1;
+            if (items.length > 1) {
+                if (assoc === 'parallel') {
+                    let inv = (1 / i1) + (1 / i2);
+                    finalImp = inv > 0 ? (1 / inv) : i1;
+                } else if (assoc === 'series') {
+                    finalImp = i1 + i2;
+                }
+            }
+
             if (channelStructure[chKey]) {
-                channelStructure[chKey].speakers.push({ name: type1, qty: qty, power: power, imp: imp });
-                channelStructure[chKey].association = assoc;
+                channelStructure[chKey].groups.push({
+                    items: items,
+                    association: assoc,
+                    finalImp: finalImp,
+                    totalPower: totalPower
+                });
                 calculateSystem();
             }
         }
 
-        function removeSpeakerFromChannel(chKey, index) {
+        function removeGroupFromChannel(chKey, groupIdx) {
             if (channelStructure[chKey]) {
-                channelStructure[chKey].speakers.splice(index, 1);
+                channelStructure[chKey].groups.splice(groupIdx, 1);
                 calculateSystem();
             }
         }
@@ -475,64 +535,33 @@
 
             for (let chKey in channelStructure) {
                 const ch = channelStructure[chKey];
-                let chPower = 0;
-                let chImpedance = 0;
+                let chGroupListHTML = '';
 
-                if (ch.speakers.length > 0) {
-                    let totalUnits = 0;
-
-                    ch.speakers.forEach(s => {
-                        chPower += (s.qty * s.power);
-                        totalUnits += s.qty;
-                    });
-
-                    if (ch.association === 'direct' || totalUnits === 1) {
-                        chImpedance = ch.speakers[0].imp;
-                    } else if (ch.association === 'parallel') {
-                        let invSum = 0;
-                        ch.speakers.forEach(s => { invSum += (s.qty / s.imp); });
-                        chImpedance = invSum > 0 ? (1 / invSum) : ch.speakers[0].imp;
-                    } else if (ch.association === 'series') {
-                        let seriesSum = 0;
-                        ch.speakers.forEach(s => { seriesSum += (s.qty * s.imp); });
-                        chImpedance = seriesSum;
-                    } else if (ch.association === 'bridge') {
-                        let invSum = 0;
-                        ch.speakers.forEach(s => { invSum += (s.qty / s.imp); });
-                        chImpedance = invSum > 0 ? (1 / invSum) : ch.speakers[0].imp;
-                    }
-
-                    ch.finalImp = chImpedance;
+                ch.groups.forEach((g, gIdx) => {
+                    totalPower += g.totalPower;
 
                     let cableMM = "1.5 mm²";
                     let cableAWG = "15 AWG";
-                    if (chPower > 1000) { cableMM = "4.0 mm² Cobre"; cableAWG = "11 AWG"; }
-                    else if (chPower > 400) { cableMM = "2.5 mm² Cobre"; cableAWG = "13 AWG"; }
+                    if (g.totalPower > 1000) { cableMM = "4.0 mm² Cobre"; cableAWG = "11 AWG"; }
+                    else if (g.totalPower > 400) { cableMM = "2.5 mm² Cobre"; cableAWG = "13 AWG"; }
 
-                    let assocLabel = ch.association === 'direct' ? 'CANAL ÚNICO' : ch.association.toUpperCase();
-                    if (ch.association === 'bridge') assocLabel = 'BRIDGE / PONTE';
-
-                    const namesList = ch.speakers.map(s => `${s.qty}x ${s.name}`).join(' + ');
+                    let assocLabel = g.association === 'direct' ? 'INDIVIDUAL' : g.association.toUpperCase();
+                    let namesDesc = g.items.map(it => `${it.name} (${it.power}W, ${it.imp}Ω)`).join(' + ');
 
                     tableBody.innerHTML += `
                         <tr>
                             <td><strong>${ch.ampName}</strong><br><small style="color:var(--accent-cyan)">${ch.chName}</small></td>
-                            <td>${namesList}</td>
+                            <td>${namesDesc}</td>
                             <td><span style="color:var(--accent-cyan); font-weight:bold;">${cableMM}</span></td>
                             <td>${cableAWG}</td>
-                            <td>${assocLabel} (${chImpedance.toFixed(1)} Ω)</td>
+                            <td>${assocLabel} (${g.finalImp.toFixed(1)} Ω)</td>
                         </tr>
                     `;
-                }
 
-                totalPower += chPower;
-
-                let speakerListHTML = '';
-                ch.speakers.forEach((s, idx) => {
-                    speakerListHTML += `
+                    chGroupListHTML += `
                         <div class="channel-speaker-item">
-                            <span>${s.qty}x ${s.name} (${s.power}W RMS cad. - ${s.imp}Ω)</span>
-                            <i class="fa-solid fa-trash btn-remove" title="Remover falante" onclick="removeSpeakerFromChannel('${chKey}', ${idx})"></i>
+                            <span>[${assocLabel}] ${namesDesc} = <strong>${g.finalImp.toFixed(1)}Ω</strong></span>
+                            <i class="fa-solid fa-trash btn-remove" title="Remover grupo" onclick="removeGroupFromChannel('${chKey}', ${gIdx})"></i>
                         </div>
                     `;
                 });
@@ -541,9 +570,9 @@
                     <div class="channel-card">
                         <div class="channel-card-header">
                             <span>${ch.ampName} - ${ch.chName}</span>
-                            <span>${chImpedance.toFixed(1)} Ω</span>
+                            <span>${ch.groups.length} Grupo(s)</span>
                         </div>
-                        ${speakerListHTML.length > 0 ? speakerListHTML : '<div style="font-size:0.75rem; color:var(--text-muted)">Nenhum equipamento neste canal.</div>'}
+                        ${chGroupListHTML.length > 0 ? chGroupListHTML : '<div style="font-size:0.75rem; color:var(--text-muted)">Nenhum equipamento conectado.</div>'}
                     </div>
                 `;
             }
@@ -576,12 +605,11 @@
             document.getElementById('valFuse').innerText = fuseRating > 0 ? `${fuseRating} A (ANL)` : '0 A';
             document.getElementById('valAuxBattery').innerText = auxBatteryAh > 0 ? `${auxBatteryAh} Ah AGM` : 'Cofre OK';
 
-            drawGraphicCanvasV10(totalPower, cableGauge, cableAwgPower, fuseRating, auxBatteryAh);
+            drawGraphicCanvasV11(totalPower, cableGauge, cableAwgPower, fuseRating, auxBatteryAh);
             renderProducts(totalPower);
         }
 
-        /* PARTE 5: DESENHISTA GRÁFICO REALISTA COM CABOS ROTULADOS */
-        function drawGraphicCanvasV10(totalPower, cableGauge, cableAwgPower, fuseRating, auxBattery) {
+        function drawGraphicCanvasV11(totalPower, cableGauge, cableAwgPower, fuseRating, auxBattery) {
             const canvas = document.getElementById('wiringCanvas');
             const ctx = canvas.getContext('2d');
             canvas.width = canvas.parentElement.clientWidth;
@@ -594,25 +622,17 @@
             if (totalPower === 0) {
                 ctx.fillStyle = '#8290a0';
                 ctx.font = '14px Rajdhani';
-                ctx.fillText('Adicione alto-falantes e amplificadores para gerar a ilustração de cabeamento.', w / 2 - 240, h / 2);
+                ctx.fillText('Adicione equipamentos nos canais para gerar o diagrama elétrico visual.', w / 2 - 240, h / 2);
                 return;
             }
 
-            // 1. DESENHAR PLAYER / DSP
             drawArtPlayer(ctx, 25, 35, 110, 50);
-
-            // 2. DESENHAR BATERIA DE COFRE
             drawArtBattery(ctx, 25, 200, 75, 75, 'BATERIA COFRE', '60 Ah');
-
-            // 3. DESENHAR FUSÍVEL ANL
             drawArtFuse(ctx, 160, 212, 60, 50, fuseRating);
-
-            // Linha do Cofre ao Fusível com Texto da Bitola
             drawLabeledCable(ctx, 100, 237, 160, 237, '#ff2a5f', 5, `Cabo +${cableGauge}mm² (${cableAwgPower})`);
 
             let lastPowerX = 220;
 
-            // 4. BATERIA AUXILIAR AGM (SE HOUVER)
             if (auxBattery > 0) {
                 drawLabeledCable(ctx, lastPowerX, 237, lastPowerX + 50, 237, '#ff2a5f', 5, `+${cableGauge}mm²`);
                 lastPowerX += 50;
@@ -620,11 +640,10 @@
                 lastPowerX += 80;
             }
 
-            // Mapear Amplificadores Ativos
             let activeAmps = {};
             for (let chKey in channelStructure) {
                 const ch = channelStructure[chKey];
-                if (ch.speakers.length > 0) {
+                if (ch.groups.length > 0) {
                     if (!activeAmps[ch.ampName]) activeAmps[ch.ampName] = [];
                     activeAmps[ch.ampName].push(ch);
                 }
@@ -632,55 +651,47 @@
 
             let ampY = 70;
             let ampX = lastPowerX + 60;
-
             drawLabeledCable(ctx, lastPowerX, 237, ampX, 237, '#ff2a5f', 5, `Linha Força Principal (+${cableGauge}mm²)`);
 
-            // 5. RENDERIZAR AMPLIFICADORES E FALANTES
             for (let ampTitle in activeAmps) {
                 drawArtAmplifier(ctx, ampX, ampY, 130, 150, ampTitle);
-
-                // Cabo RCA da Central ao Módulo
                 drawLabeledCable(ctx, 135, 60, ampX, ampY + 25, '#00f0ff', 2, 'Cabo RCA Blindado 5m');
 
                 let spkY = ampY + 15;
                 const outX = ampX + 130;
 
                 activeAmps[ampTitle].forEach(ch => {
-                    let totalW = 0;
-                    ch.speakers.forEach(s => totalW += s.qty * s.power);
+                    ch.groups.forEach(g => {
+                        let spkCableText = "1.5mm² (15 AWG)";
+                        if (g.totalPower > 1000) spkCableText = "4.0mm² (11 AWG)";
+                        else if (g.totalPower > 400) spkCableText = "2.5mm² (13 AWG)";
 
-                    let spkCableText = "1.5mm² (15 AWG)";
-                    if (totalW > 1000) spkCableText = "4.0mm² (11 AWG)";
-                    else if (totalW > 400) spkCableText = "2.5mm² (13 AWG)";
+                        drawLabeledCable(ctx, outX, spkY + 25, outX + 80, spkY + 25, '#00ff88', 2.5, spkCableText);
 
-                    drawLabeledCable(ctx, outX, spkY + 25, outX + 80, spkY + 25, '#00ff88', 2.5, spkCableText);
+                        let labelSummary = g.items.map(i => i.name.split('(')[0]).join(' + ');
+                        drawArtSpeaker(ctx, outX + 80, spkY, 160, 50, labelSummary, g.finalImp);
 
-                    const firstSpk = ch.speakers[0];
-                    drawArtSpeaker(ctx, outX + 80, spkY, 150, 50, firstSpk.name, ch.finalImp);
-
-                    spkY += 60;
+                        spkY += 60;
+                    });
                 });
 
                 ampY += 180;
             }
         }
 
-        /* --- ARTWORK COMPONENTES GRAFICOS (ILUSTRAÇÕES VETORIAIS CANVAS) --- */
-
         function drawArtPlayer(ctx, x, y, w, h) {
             ctx.fillStyle = '#121722'; ctx.fillRect(x, y, w, h);
             ctx.strokeStyle = '#00f0ff'; ctx.lineWidth = 2; ctx.strokeRect(x, y, w, h);
-            ctx.fillStyle = '#00f0ff'; ctx.fillRect(x + 10, y + 10, w - 45, 16); // Tela
-            ctx.fillStyle = '#333'; ctx.beginPath(); ctx.arc(x + w - 18, y + 25, 10, 0, Math.PI * 2); ctx.fill(); // Botão Volume
+            ctx.fillStyle = '#00f0ff'; ctx.fillRect(x + 10, y + 10, w - 45, 16);
+            ctx.fillStyle = '#333'; ctx.beginPath(); ctx.arc(x + w - 18, y + 25, 10, 0, Math.PI * 2); ctx.fill();
             ctx.fillStyle = '#fff'; ctx.font = 'bold 9px Rajdhani'; ctx.fillText('CENTRAL / DSP', x + 10, y + h - 8);
         }
 
         function drawArtBattery(ctx, x, y, w, h, title, capText) {
             ctx.fillStyle = '#181d28'; ctx.fillRect(x, y, w, h);
             ctx.strokeStyle = '#ff5500'; ctx.lineWidth = 2; ctx.strokeRect(x, y, w, h);
-            // Polos
-            ctx.fillStyle = '#ff2a5f'; ctx.fillRect(x + 8, y - 6, 12, 6); // Positivo
-            ctx.fillStyle = '#00f0ff'; ctx.fillRect(x + w - 20, y - 6, 12, 6); // Negativo
+            ctx.fillStyle = '#ff2a5f'; ctx.fillRect(x + 8, y - 6, 12, 6);
+            ctx.fillStyle = '#00f0ff'; ctx.fillRect(x + w - 20, y - 6, 12, 6);
             ctx.fillStyle = '#ff5500'; ctx.font = 'bold 10px Orbitron'; ctx.textAlign = 'center';
             ctx.fillText(title, x + w / 2, y + 28);
             ctx.fillStyle = '#fff'; ctx.font = 'bold 12px Rajdhani';
@@ -690,19 +701,18 @@
         function drawArtFuse(ctx, x, y, w, h, fuseRating) {
             ctx.fillStyle = 'rgba(255, 179, 0, 0.15)'; ctx.fillRect(x, y, w, h);
             ctx.strokeStyle = '#ffb300'; ctx.lineWidth = 2; ctx.strokeRect(x, y, w, h);
-            ctx.fillStyle = '#ffb300'; ctx.fillRect(x + 5, y + h/2 - 3, w - 10, 6); // Lâmina
+            ctx.fillStyle = '#ffb300'; ctx.fillRect(x + 5, y + h/2 - 3, w - 10, 6);
             ctx.fillStyle = '#fff'; ctx.font = 'bold 10px Orbitron'; ctx.textAlign = 'center';
             ctx.fillText(`${fuseRating}A`, x + w/2, y + 18);
             ctx.font = '8px Rajdhani'; ctx.fillText('FUSÍVEL ANL', x + w/2, y + h - 6); ctx.textAlign = 'left';
         }
 
         function drawArtAmplifier(ctx, x, y, w, h, title) {
-            // Dissipador de Calor
             ctx.fillStyle = '#0d111a'; ctx.fillRect(x, y, w, h);
             ctx.strokeStyle = '#ff5500'; ctx.lineWidth = 2; ctx.strokeRect(x, y, w, h);
             ctx.fillStyle = 'rgba(255, 85, 0, 0.1)';
             for (let i = 10; i < h - 10; i += 12) {
-                ctx.fillRect(x + 5, y + i, w - 10, 4); // Aletas de alumínio
+                ctx.fillRect(x + 5, y + i, w - 10, 4);
             }
             ctx.fillStyle = '#fff'; ctx.font = 'bold 11px Orbitron'; ctx.textAlign = 'center';
             ctx.fillText(title, x + w / 2, y + 30); ctx.textAlign = 'left';
@@ -712,32 +722,29 @@
             ctx.fillStyle = '#0f131d'; ctx.fillRect(x, y, w, h);
             ctx.strokeStyle = '#00f0ff'; ctx.lineWidth = 1.5; ctx.strokeRect(x, y, w, h);
             
-            // Desenhar Cone de Alto-Falante Vetorial
-            ctx.fillStyle = '#1a2233'; ctx.beginPath(); ctx.arc(x + 25, y + h/2, 18, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = '#1a2233'; ctx.beginPath(); ctx.arc(x + 22, y + h/2, 16, 0, Math.PI * 2); ctx.fill();
             ctx.strokeStyle = '#00f0ff'; ctx.stroke();
-            ctx.fillStyle = '#00f0ff'; ctx.beginPath(); ctx.arc(x + 25, y + h/2, 6, 0, Math.PI * 2); ctx.fill(); // Calota Central
+            ctx.fillStyle = '#00f0ff'; ctx.beginPath(); ctx.arc(x + 22, y + h/2, 5, 0, Math.PI * 2); ctx.fill();
 
-            ctx.fillStyle = '#fff'; ctx.font = 'bold 10px Rajdhani';
-            ctx.fillText(name.split('(')[0], x + 50, y + 20);
-            ctx.fillStyle = '#00ff88'; ctx.font = 'bold 11px Orbitron';
-            ctx.fillText(`${imp.toFixed(1)} Ω`, x + 50, y + 38);
+            ctx.fillStyle = '#fff'; ctx.font = 'bold 9px Rajdhani';
+            ctx.fillText(name.substring(0, 22), x + 44, y + 18);
+            ctx.fillStyle = '#00ff88'; ctx.font = 'bold 10px Orbitron';
+            ctx.fillText(`Carga: ${imp.toFixed(1)} Ω`, x + 44, y + 36);
         }
 
         function drawLabeledCable(ctx, x1, y1, x2, y2, color, width, labelText) {
-            // Desenhar linha de fiação
             ctx.strokeStyle = color; ctx.lineWidth = width;
             ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
 
-            // Desenhar Rótulo com a Bitola
             const midX = (x1 + x2) / 2;
             const midY = (y1 + y2) / 2;
             
             ctx.fillStyle = '#07090e';
-            ctx.fillRect(midX - 45, midY - 10, 90, 16);
+            ctx.fillRect(midX - 52, midY - 10, 104, 16);
             ctx.strokeStyle = color; ctx.lineWidth = 1;
-            ctx.strokeRect(midX - 45, midY - 10, 90, 16);
+            ctx.strokeRect(midX - 52, midY - 10, 104, 16);
 
-            ctx.fillStyle = '#fff'; ctx.font = 'bold 8.5px Rajdhani'; ctx.textAlign = 'center';
+            ctx.fillStyle = '#fff'; ctx.font = 'bold 8px Rajdhani'; ctx.textAlign = 'center';
             ctx.fillText(labelText, midX, midY + 2);
             ctx.textAlign = 'left';
         }
