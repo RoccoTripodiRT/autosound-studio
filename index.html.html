@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoSound Studio V4 - Arquitetura & Engenharia de Som Automotivo</title>
+    <title>AutoSound Studio V5 - Engenharia & Links Diretos</title>
     <!-- Font Awesome Icons & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -54,7 +54,6 @@
             font-family: 'Orbitron', sans-serif;
         }
 
-        /* Header Layout */
         header {
             background: rgba(10, 13, 20, 0.95);
             backdrop-filter: blur(16px);
@@ -91,24 +90,23 @@
             color: var(--accent-orange);
         }
 
-        .badge-v4 {
-            background: linear-gradient(135deg, var(--accent-orange), #ff0055);
-            color: #fff;
+        .badge-v5 {
+            background: linear-gradient(135deg, var(--accent-orange), #00f0ff);
+            color: #000;
             font-size: 0.65rem;
-            font-weight: 800;
+            font-weight: 900;
             padding: 4px 10px;
             border-radius: 4px;
             font-family: 'Orbitron', sans-serif;
             letter-spacing: 1.5px;
         }
 
-        /* Main Studio Grid Layout */
         .workspace {
             max-width: 1800px;
             margin: 25px auto;
             padding: 0 20px;
             display: grid;
-            grid-template-columns: 440px 1fr 400px;
+            grid-template-columns: 440px 1fr 420px;
             gap: 22px;
         }
 
@@ -127,7 +125,6 @@
             }
         }
 
-        /* Panel Cards Styling */
         .panel {
             background: var(--panel-bg);
             backdrop-filter: blur(20px);
@@ -159,7 +156,6 @@
             color: #fff;
         }
 
-        /* Form Controls & Inputs */
         .form-group {
             display: flex;
             flex-direction: column;
@@ -195,7 +191,6 @@
             gap: 10px;
         }
 
-        /* Preset Architect Buttons */
         .preset-buttons {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -221,7 +216,6 @@
             color: var(--accent-cyan);
         }
 
-        /* Buttons */
         .btn {
             padding: 12px 18px;
             border-radius: 8px;
@@ -250,7 +244,6 @@
             box-shadow: 0 6px 24px rgba(255, 85, 0, 0.5);
         }
 
-        /* Channel & Device Items */
         .channel-card {
             background: var(--card-inner);
             border: 1px solid var(--panel-border);
@@ -296,7 +289,6 @@
             border-bottom: none;
         }
 
-        /* Metric Dashboard Cards */
         .metrics-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -327,7 +319,6 @@
         .metric-card.green::before { background: var(--accent-green); }
         .metric-card.purple::before { background: var(--accent-purple); }
         .metric-card.red::before { background: var(--accent-red); }
-        .metric-card.yellow::before { background: var(--accent-yellow); }
 
         .metric-val {
             font-family: 'Orbitron', sans-serif;
@@ -344,7 +335,6 @@
             font-weight: 700;
         }
 
-        /* Wiring Table for Audio Components */
         .wiring-table-container {
             background: var(--card-inner);
             border: 1px solid var(--panel-border);
@@ -378,7 +368,6 @@
             border-bottom: none;
         }
 
-        /* Canvas Interactive Visualizer */
         .canvas-container {
             position: relative;
             background: #040609;
@@ -388,7 +377,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 520px;
+            min-height: 500px;
         }
 
         canvas {
@@ -397,12 +386,11 @@
             height: 100%;
         }
 
-        /* Products Catalog Grid */
         .products-grid {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            max-height: 650px;
+            max-height: 680px;
             overflow-y: auto;
             padding-right: 4px;
         }
@@ -415,12 +403,17 @@
             display: flex;
             gap: 14px;
             align-items: center;
-            transition: transform 0.2s, border-color 0.2s;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            position: relative;
         }
 
         .product-card:hover {
-            border-color: var(--accent-orange);
+            border-color: var(--accent-cyan);
             transform: translateX(4px);
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.15);
         }
 
         .product-icon {
@@ -445,12 +438,33 @@
             font-weight: 700;
             font-size: 0.95rem;
             color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .product-name i.fa-external-link {
+            font-size: 0.75rem;
+            color: var(--accent-cyan);
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .product-card:hover .product-name i.fa-external-link {
+            opacity: 1;
         }
 
         .product-spec {
             font-size: 0.78rem;
             color: var(--text-muted);
             margin-top: 2px;
+        }
+
+        .product-brand-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
         }
 
         .product-tag {
@@ -461,7 +475,16 @@
             border: 1px solid rgba(0, 240, 255, 0.2);
             padding: 2px 6px;
             border-radius: 4px;
-            margin-top: 6px;
+            font-weight: 700;
+        }
+
+        .brand-badge {
+            font-size: 0.65rem;
+            background: rgba(255, 85, 0, 0.15);
+            color: var(--accent-orange);
+            border: 1px solid rgba(255, 85, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
             font-weight: 700;
         }
 
@@ -491,19 +514,18 @@
         <div class="brand">
             <i class="fa-solid fa-sliders"></i>
             <div>
-                <h1 class="brand-title">AUTOSOUND <span>STUDIO V4</span></h1>
+                <h1 class="brand-title">AUTOSOUND <span>STUDIO V5</span></h1>
             </div>
-            <span class="badge-v4">PRO EDITION v4.0</span>
+            <span class="badge-v5">PRO EDITION + CATALOG LINKS</span>
         </div>
         <div style="font-size: 0.85rem; color: var(--text-muted);" class="tech-font">
-            <i class="fa-solid fa-microchip" style="color: var(--accent-cyan); margin-right: 6px;"></i> Arquitetura Completa de Som Automotivo & Eletroacústica
+            <i class="fa-solid fa-link" style="color: var(--accent-cyan); margin-right: 6px;"></i> Dimensionamento Elétrico, Esquemas & Links dos Fabricantes
         </div>
     </header>
 
-    <!-- Main Studio Grid -->
     <div class="workspace">
         
-        <!-- LEFT PANEL: Amplifiers, Peripherals & Speakers Configuration -->
+        <!-- LEFT PANEL -->
         <div class="panel">
             <div class="panel-header">
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
@@ -618,24 +640,20 @@
                 <i class="fa-solid fa-plus-circle"></i> Conectar Aparelho ao Módulo
             </button>
 
-            <!-- Channel Allocation Display -->
             <div class="panel-header" style="margin-top: 10px;">
                 <i class="fa-solid fa-diagram-project"></i>
                 <h2>Mapeamento de Canais Inseridos</h2>
             </div>
-            <div id="channelsAllocated">
-                <!-- Dynamic Channel Cards -->
-            </div>
+            <div id="channelsAllocated"></div>
         </div>
 
-        <!-- CENTER PANEL: Metrics Dashboard, Audio Wiring Table & Interactive Canvas Schematic -->
+        <!-- CENTER PANEL -->
         <div class="panel">
             <div class="panel-header">
                 <i class="fa-solid fa-chart-pie"></i>
                 <h2>4. Dimensionamento Técnico & Consumo Elétrico</h2>
             </div>
 
-            <!-- Metrics Cards Dashboard -->
             <div class="metrics-grid">
                 <div class="metric-card">
                     <div class="metric-lbl">Potência Total</div>
@@ -678,7 +696,6 @@
 
             <div id="impedanceAlertContainer"></div>
 
-            <!-- Audio Cabling Table -->
             <div class="panel-header" style="margin-top: 5px;">
                 <i class="fa-solid fa-table-list"></i>
                 <h2>5. Tabela de Cabeamento para Alto-Falantes</h2>
@@ -694,9 +711,7 @@
                             <th>Modo / Impedância</th>
                         </tr>
                     </thead>
-                    <tbody id="wiringTableBody">
-                        <!-- Dynamic Wiring Rows -->
-                    </tbody>
+                    <tbody id="wiringTableBody"></tbody>
                 </table>
             </div>
 
@@ -705,31 +720,27 @@
                 <h2>6. Esquema Gráfico da Estrutura de Instalação</h2>
             </div>
 
-            <!-- Canvas Viewport -->
             <div class="canvas-container">
                 <canvas id="wiringCanvas" width="900" height="520"></canvas>
             </div>
         </div>
 
-        <!-- RIGHT PANEL: Commercial Products Catalog -->
+        <!-- RIGHT PANEL -->
         <div class="panel catalog-panel">
             <div class="panel-header">
                 <i class="fa-solid fa-boxes-packing"></i>
-                <h2>7. Lista de Equipamentos no Mercado</h2>
+                <h2>7. Lista de Equipamentos & Links de Fabricantes</h2>
             </div>
             <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: -10px;">
-                Sugestão otimizada de aparelhos, amplificadores e periféricos do mercado brasileiro.
+                Clique em qualquer produto da lista para abrir o site oficial do fabricante/marca.
             </p>
 
-            <div class="products-grid" id="productsCatalog">
-                <!-- Products Inserted via JS -->
-            </div>
+            <div class="products-grid" id="productsCatalog"></div>
         </div>
 
     </div>
 
     <script>
-        // System State
         let channelStructure = {};
 
         window.onload = function() {
@@ -860,7 +871,6 @@
                         totalQty += s.qty;
                     });
 
-                    // Impedance Math
                     if (ch.mode === 'parallel') {
                         chImpedance = baseImp / totalQty;
                     } else if (ch.mode === 'series') {
@@ -878,7 +888,6 @@
                         impedanceAlerts.push(`Risco Elétrico: Impedância no <strong>${ch.name}</strong> está em ${chImpedance}Ω (Abaixo do mínimo de ${ampMinImp}Ω do módulo).`);
                     }
 
-                    // Populate Speaker Wiring Table
                     const recommendedSpeakerCable = chPower > 1000 ? "4.0 mm² (11 AWG) Paralelo Cobre" : (chPower > 400 ? "2.5 mm² (13 AWG) Cobre" : "1.5 mm² (15 AWG) Polarizado");
                     tableBody.innerHTML += `
                         <tr>
@@ -892,7 +901,6 @@
 
                 totalPower += chPower;
 
-                // Render Channel Allocation Card
                 let speakerListHTML = '';
                 ch.speakers.forEach((s, idx) => {
                     speakerListHTML += `
@@ -914,22 +922,20 @@
                 `;
             }
 
-            // Impedance Alert Render
             const alertDiv = document.getElementById('impedanceAlertContainer');
             alertDiv.innerHTML = '';
             impedanceAlerts.forEach(msg => {
                 alertDiv.innerHTML += `<div class="alert-box"><i class="fa-solid fa-triangle-exclamation"></i> <div>${msg}</div></div>`;
             });
 
-            // Electrical Calculation (Amperage & Main Power Cable Gauge)
-            const efficiency = 0.85; // Class D Amplifier Average Efficiency
+            const efficiency = 0.85;
             const maxAmps = totalPower > 0 ? totalPower / (voltage * efficiency) : 0;
-            const musicalAmps = maxAmps * 0.50; // Dynamic Musical Load
+            const musicalAmps = maxAmps * 0.50;
 
             let cableGauge = 0;
             let awgGauge = "10 AWG";
             if (maxAmps > 0) {
-                const deltaV = voltage * 0.03; // Max 3% Voltage Drop
+                const deltaV = voltage * 0.03;
                 const exactGauge = (2 * 4.5 * maxAmps * 0.0175) / deltaV;
 
                 if (exactGauge <= 6) { cableGauge = 6; awgGauge = "9 AWG"; }
@@ -944,7 +950,6 @@
             const fuseRating = Math.ceil((maxAmps * 1.18) / 10) * 10;
             const auxBatteryAh = Math.max(0, Math.ceil(musicalAmps - 50));
 
-            // Update Metric UI Labels
             document.getElementById('valTotalPower').innerText = `${totalPower.toLocaleString()} W`;
             document.getElementById('valMaxAmps').innerText = `${maxAmps.toFixed(1)} A`;
             document.getElementById('valMusicAmps').innerText = `${musicalAmps.toFixed(1)} A`;
@@ -953,12 +958,10 @@
             document.getElementById('valFuse').innerText = fuseRating > 0 ? `${fuseRating} A (ANL)` : '0 A';
             document.getElementById('valAuxBattery').innerText = auxBatteryAh > 0 ? `${auxBatteryAh} Ah` : 'Cofre OK';
 
-            // Canvas Draw Operations
             drawSchematicCanvas(totalPower, cableGauge, fuseRating, auxBatteryAh);
             renderProducts(totalPower);
         }
 
-        // Graphical System Visualizer Engine
         function drawSchematicCanvas(totalPower, cableGauge, fuseRating, auxBattery) {
             const canvas = document.getElementById('wiringCanvas');
             const ctx = canvas.getContext('2d');
@@ -980,10 +983,8 @@
 
             const playerType = document.getElementById('playerSource').options[document.getElementById('playerSource').selectedIndex].text.split('(')[0];
 
-            // 1. Audio Player Source (Player / Multimídia / DSP)
             drawBox(ctx, 25, 40, 110, 50, '#0f131d', '#00f0ff', 'FONTE DE SINAL', playerType);
 
-            // RCA Signal Wires
             drawWire(ctx, 135, 65, 230, 65, '#00f0ff', 2);
             ctx.fillStyle = '#00f0ff';
             ctx.font = '10px Rajdhani';
@@ -991,12 +992,10 @@
 
             const midY = 200;
 
-            // 2. Primary Cofre Battery
             drawBox(ctx, 25, midY - 35, 75, 70, '#0f131d', '#ff5500', 'BATERIA', 'COFRE 60Ah');
 
             let currX = 100;
 
-            // 3. Auxiliary Battery
             if (auxBattery > 0) {
                 drawWire(ctx, currX, midY - 10, currX + 45, midY - 10, '#ff3333', 4);
                 currX += 45;
@@ -1004,19 +1003,16 @@
                 currX += 80;
             }
 
-            // 4. Protection Fuse / Circuit Breaker
             drawWire(ctx, currX, midY - 10, currX + 45, midY - 10, '#ff3333', 4);
             currX += 45;
             drawBox(ctx, currX, midY - 20, 55, 40, '#ffb300', '#000', 'FUSÍVEL', `${fuseRating}A`);
 
-            // Cable Specification Label
             ctx.fillStyle = '#00f0ff';
             ctx.font = 'bold 11px Rajdhani';
             ctx.fillText(`Cabo +${cableGauge}mm²`, currX - 65, midY - 26);
 
             currX += 55;
 
-            // 5. Main Amplifier Module Block
             drawWire(ctx, currX, midY - 10, currX + 45, midY - 10, '#ff3333', 4);
             currX += 45;
             const ampW = 145;
@@ -1024,13 +1020,11 @@
             const ampY = midY - 60;
             drawBox(ctx, currX, ampY, ampW, ampH, '#090d14', '#ff5500', 'AMPLIFICADOR CENTRAL', `${totalPower}W RMS TOTAL`);
 
-            // Ground Connection (GND)
             drawWire(ctx, currX + 72, ampY + ampH, currX + 72, ampY + ampH + 40, '#666', 4);
             ctx.fillStyle = '#8290a0';
             ctx.font = '10px Rajdhani';
             ctx.fillText('CHASSI / ATERRAMENTO', currX + 18, ampY + ampH + 54);
 
-            // 6. Speakers Wiring Outlets
             const outX = currX + ampW;
             let channelY = ampY + 28;
 
@@ -1076,7 +1070,6 @@
             ctx.stroke();
         }
 
-        // Recommended Commercial Products Market List
         function renderProducts(power) {
             const grid = document.getElementById('productsCatalog');
             grid.innerHTML = '';
@@ -1085,42 +1078,48 @@
 
             if (power <= 1200) {
                 products = [
-                    { name: 'Pioneer Multimídia DMH-Z5380TV', spec: 'Central 2DIN com Saídas RCA 4V e Equalizador 13 Bandas', cat: 'Player / Multimídia', icon: 'fa-tv' },
-                    { name: 'Taramps TS 400x4 Digital', spec: '4 Canais de 100W RMS @ 2 Ohms / 2x 200W Bridge', cat: 'Amplificador', icon: 'fa-bolt' },
-                    { name: 'Pioneer TS-W312S4 12"', spec: 'Subwoofer 500W RMS - Bobina Simples 4 Ohms', cat: 'Subwoofer', icon: 'fa-bullhorn' },
-                    { name: 'Kit 2 Vias JBL Selenium 6TR6A', spec: '120W RMS o par com Tweeter Neodímio', cat: 'Voz / Portas', icon: 'fa-volume-high' },
-                    { name: 'Cabo RCA Technoise Series 300 5m', spec: 'Blindagem Dupla contra Ruídos do Alternador', cat: 'Cabeamento Sinal', icon: 'fa-wire-group' }
+                    { name: 'Pioneer DMH-Z5380TV', brand: 'Pioneer', url: 'https://www.pioneer.com.br', spec: 'Central Multimídia 2DIN com RCA 4V', cat: 'Player / Multimídia', icon: 'fa-tv' },
+                    { name: 'Taramps TS 400x4 Digital', brand: 'Taramps', url: 'https://www.taramps.com.br', spec: '4 Canais 100W RMS @ 2Ω / Bridge 200W', cat: 'Amplificador', icon: 'fa-bolt' },
+                    { name: 'Pioneer TS-W312S4 12"', brand: 'Pioneer', url: 'https://www.pioneer.com.br', spec: 'Subwoofer 500W RMS - 4 Ohms', cat: 'Subwoofer', icon: 'fa-bullhorn' },
+                    { name: 'JBL Selenium Kit 2 Vias 6TR6A', brand: 'JBL', url: 'https://www.jbl.com.br', spec: '120W RMS com Crossover', cat: 'Voz / Portas', icon: 'fa-volume-high' },
+                    { name: 'Technoise Cabo RCA 5m', brand: 'Technoise', url: 'https://www.technoise.com.br', spec: 'Blindagem Dupla contra Interferências', cat: 'Cabeamento Sinal', icon: 'fa-plug' }
                 ];
             } else if (power <= 4000) {
                 products = [
-                    { name: 'Processador Expert PX2 R-Line', spec: 'DSP 6 Canais com Limiter, Crossover e Alinhamento', cat: 'Processador DSP', icon: 'fa-sliders' },
-                    { name: 'Soundigital SD 3000.1 EVOX 5', spec: '3000W RMS Monobloco @ 1 Ohm ou 2 Ohms', cat: 'Amplificador Mono', icon: 'fa-bolt' },
-                    { name: 'Banda Viking 800.4', spec: '4 Canais de 200W RMS para Cornetas e Tweeters', cat: 'Amplificador Voz', icon: 'fa-bolt' },
-                    { name: 'Eros Target Bass 3.0K 15"', spec: '1500W RMS - Woofer de Alta Pressão Externa', cat: 'Woofer Trio', icon: 'fa-bullhorn' },
-                    { name: 'Fonte Usina 120A Smart Bivolt', spec: 'Mantém o Som Ligado na Tomada sem Descarregar Bateria', cat: 'Alimentação', icon: 'fa-charging-station' },
-                    { name: 'Bateria Freedom Estacionária 105Ah', spec: 'Ciclo Profundo para Longa Autonomia', cat: 'Bateria Auxiliar', icon: 'fa-car-battery' }
+                    { name: 'Expert PX2 R-Line DSP', brand: 'Expert Electronics', url: 'https://expertelectronics.com.br', spec: 'Processador 6 Canais com Equalizador/Limiter', cat: 'Processador DSP', icon: 'fa-sliders' },
+                    { name: 'Soundigital SD 3000.1 EVOX 5', brand: 'Soundigital', url: 'https://soundigital.com.br', spec: '3000W RMS Monobloco @ 1Ω / 2Ω', cat: 'Amplificador Mono', icon: 'fa-bolt' },
+                    { name: 'Banda Viking 800.4', brand: 'Banda Audioparts', url: 'https://bandaaudioparts.com.br', spec: '4 Canais de 200W RMS para Voz/Cornetas', cat: 'Amplificador Voz', icon: 'fa-bolt' },
+                    { name: 'Eros Target Bass 3.0K 15"', brand: 'Eros Alto-Falantes', url: 'https://www.eros.com.br', spec: '1500W RMS Woofer de Alta Pressão', cat: 'Woofer Trio', icon: 'fa-bullhorn' },
+                    { name: 'Usina 120A Smart Bivolt', brand: 'Usina Spark', url: 'https://www.sparkpower.com.br', spec: 'Fonte Automotiva com Voltímetro Digital', cat: 'Alimentação', icon: 'fa-charging-station' },
+                    { name: 'Bateria Freedom Estacionária 105Ah', brand: 'Moura / Freedom', url: 'https://www.moura.com.br', spec: 'Ciclo Profundo para Longa Autonomia', cat: 'Bateria Auxiliar', icon: 'fa-car-battery' }
                 ];
             } else {
                 products = [
-                    { name: 'Processador Stetsom STX2448 DSP', spec: 'Processamento Digital Pro 24 bits / 48kHz', cat: 'Processador DSP', icon: 'fa-sliders' },
-                    { name: 'Taramps MD 8000.1 Mono', spec: '8000W RMS @ 1 Ohm Digital High Power', cat: 'Amplificador Heavy', icon: 'fa-bolt' },
-                    { name: 'Fonte JFA Heavy Duty 200A', spec: 'Fonte Digital de Alta Amperagem com Voltímetro', cat: 'Alimentação', icon: 'fa-charging-station' },
-                    { name: 'Cabo Flex Cobre 50mm²', spec: '100% Cobre Puro para Competição e Paredão', cat: 'Cabeamento Pro', icon: 'fa-plug' }
+                    { name: 'Stetsom STX2448 DSP', brand: 'Stetsom', url: 'https://www.stetsom.com.br', spec: 'Processador Digital 24 bits / 48kHz', cat: 'Processador DSP', icon: 'fa-sliders' },
+                    { name: 'Taramps MD 8000.1 Mono', brand: 'Taramps', url: 'https://www.taramps.com.br', spec: '8000W RMS @ 1 Ohm Digital High Power', cat: 'Amplificador Heavy', icon: 'fa-bolt' },
+                    { name: 'Fonte JFA Heavy Duty 200A', brand: 'JFA Eletrônicos', url: 'https://jfaeletronicos.com.br', spec: 'Fonte Digital Pro com Leitor de Amperagem', cat: 'Alimentação', icon: 'fa-charging-station' },
+                    { name: 'Cabo Flex Cobre 50mm²', brand: 'Technoise', url: 'https://www.technoise.com.br', spec: '100% Cobre Puro para Competição e Paredão', cat: 'Cabeamento Pro', icon: 'fa-plug' }
                 ];
             }
 
             products.forEach(p => {
                 grid.innerHTML += `
-                    <div class="product-card">
+                    <a class="product-card" href="${p.url}" target="_blank" title="Clique para abrir o site oficial da ${p.brand}">
                         <div class="product-icon">
                             <i class="fa-solid ${p.icon}"></i>
                         </div>
                         <div class="product-details">
-                            <div class="product-name">${p.name}</div>
+                            <div class="product-name">
+                                <span>${p.name}</span>
+                                <i class="fa-solid fa-external-link"></i>
+                            </div>
                             <div class="product-spec">${p.spec}</div>
-                            <span class="product-tag">${p.cat}</span>
+                            <div class="product-brand-row">
+                                <span class="product-tag">${p.cat}</span>
+                                <span class="brand-badge">${p.brand}</span>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 `;
             });
         }
