@@ -28,7 +28,6 @@
             --accent-cyan: #00f0ff;
             --accent-green: #00ff88;
             --accent-red: #ff2a5f;
-            --accent-purple: #ab47bc;
             --text-main: #f0f4f8;
             --text-muted: #8290a0;
             --card-inner: #0f131d;
@@ -63,7 +62,6 @@
             font-family: 'Orbitron', sans-serif;
         }
 
-        /* Header Responsivo */
         header {
             background: rgba(10, 13, 20, 0.95);
             backdrop-filter: blur(16px);
@@ -114,7 +112,6 @@
             font-family: 'Rajdhani', sans-serif;
         }
 
-        /* Grid da Aplicação Fluida */
         .workspace {
             max-width: 1800px;
             margin: 15px auto;
@@ -125,23 +122,16 @@
         }
 
         @media (max-width: 1400px) {
-            .workspace {
-                grid-template-columns: 380px 1fr;
-            }
+            .workspace { grid-template-columns: 380px 1fr; }
             .catalog-panel { grid-column: 1 / -1; }
         }
 
         @media (max-width: 992px) {
-            .workspace {
-                grid-template-columns: 1fr;
-            }
-            header {
-                padding: 10px 15px;
-            }
+            .workspace { grid-template-columns: 1fr; }
+            header { padding: 10px 15px; }
             .brand h1 { font-size: 1.2rem; }
         }
 
-        /* Painéis e Formulários */
         .panel {
             background: var(--panel-bg);
             backdrop-filter: blur(16px);
@@ -187,10 +177,7 @@
             font-size: 0.9rem;
         }
 
-        .form-control:focus {
-            outline: none;
-            border-color: var(--accent-orange);
-        }
+        .form-control:focus { outline: none; border-color: var(--accent-orange); }
 
         .grid-2 {
             display: grid;
@@ -238,7 +225,6 @@
             color: #fff;
         }
 
-        /* Indicadores Métricos */
         .metrics-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
@@ -281,7 +267,6 @@
             font-weight: 700;
         }
 
-        /* Tabela Responsiva */
         .wiring-table-container {
             background: var(--card-inner);
             border: 1px solid var(--panel-border);
@@ -308,7 +293,6 @@
             border-bottom: 1px solid rgba(255,255,255,0.03);
         }
 
-        /* Visualizador Canvas Responsivo */
         .canvas-container {
             position: relative;
             background: #040609;
@@ -324,7 +308,6 @@
             height: 100% !important;
         }
 
-        /* Produtos Clicáveis */
         .products-grid {
             display: flex;
             flex-direction: column;
@@ -420,7 +403,7 @@
 
     <div class="workspace">
         
-        <!-- PAINEL DA ESQUERDA: CONFIGURAÇÕES -->
+        <!-- CONFIGURAÇÕES -->
         <div class="panel">
             <div class="panel-header">
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
@@ -498,7 +481,7 @@
             <div class="grid-2">
                 <div class="form-group">
                     <label>Qtd. Falantes</label>
-                    <input type="number" id="spkQty" class="form-control" value="2" min="1" max="12">
+                    <input type="number" id="spkQty" class="form-control" value="1" min="1" max="12">
                 </div>
                 <div class="form-group">
                     <label>Potência (RMS Unit.)</label>
@@ -518,6 +501,7 @@
                 <div class="form-group">
                     <label>Esquema de Ligação</label>
                     <select id="wireMode" class="form-control">
+                        <option value="direct">Canal Único (1 Falante / Canal)</option>
                         <option value="parallel">Em Paralelo (Dividi Ω)</option>
                         <option value="series">Em Série (Soma Ω)</option>
                         <option value="bridge">Bridge (Canais 3+4)</option>
@@ -532,7 +516,7 @@
             <div id="channelsAllocated"></div>
         </div>
 
-        <!-- PAINEL CENTRAL: MÉTRICAS E CANVAS -->
+        <!-- MÉTRICAS E CANVAS -->
         <div class="panel">
             <div class="panel-header">
                 <i class="fa-solid fa-chart-pie"></i>
@@ -581,7 +565,7 @@
             </div>
         </div>
 
-        <!-- PAINEL DA DIREITA: PRODUTOS DO MERCADO -->
+        <!-- DIREITA: PRODUTOS DO MERCADO -->
         <div class="panel catalog-panel">
             <div class="panel-header">
                 <i class="fa-solid fa-boxes-packing"></i>
@@ -596,7 +580,6 @@
         let channelStructure = {};
         let deferredPrompt;
 
-        // Registrar Service Worker para suporte PWA / Offline
         if ('serviceWorker' in navigator) {
             const swCode = `
                 self.addEventListener('install', e => e.waitUntil(self.skipWaiting()));
@@ -607,7 +590,6 @@
             navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
         }
 
-        // Evento de instalação do App no Celular
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
@@ -629,10 +611,10 @@
             if (type === 'sq_interno') {
                 document.getElementById('ampConfig').value = '4-channel';
                 setupChannels();
-                channelStructure['channel-1'].speakers = [{ name: 'Kit 2 Vias', qty: 2, power: 90, imp: 4 }];
-                channelStructure['channel-1'].mode = 'parallel';
-                channelStructure['channel-2'].speakers = [{ name: 'Kit Coaxial', qty: 2, power: 70, imp: 4 }];
-                channelStructure['channel-2'].mode = 'parallel';
+                channelStructure['channel-1'].speakers = [{ name: 'Kit 2 Vias L', qty: 1, power: 90, imp: 4 }];
+                channelStructure['channel-1'].mode = 'direct';
+                channelStructure['channel-2'].speakers = [{ name: 'Kit 2 Vias R', qty: 1, power: 90, imp: 4 }];
+                channelStructure['channel-2'].mode = 'direct';
                 channelStructure['channel-3-4'].speakers = [{ name: 'Subwoofer 10"', qty: 1, power: 350, imp: 4 }];
                 channelStructure['channel-3-4'].mode = 'bridge';
             } else if (type === 'trio_médio') {
@@ -640,8 +622,8 @@
                 setupChannels();
                 channelStructure['channel-mono'].speakers = [{ name: 'Woofer 15"', qty: 2, power: 1200, imp: 4 }];
                 channelStructure['channel-mono'].mode = 'parallel';
-                channelStructure['channel-stereo-1'].speakers = [{ name: 'Driver/Corneta', qty: 4, power: 100, imp: 8 }];
-                channelStructure['channel-stereo-1'].mode = 'parallel';
+                channelStructure['channel-stereo-1'].speakers = [{ name: 'Driver/Corneta', qty: 2, power: 100, imp: 8 }];
+                channelStructure['channel-stereo-1'].mode = 'direct';
             } else if (type === 'paredao_heavy') {
                 document.getElementById('ampConfig').value = 'mono-stereo';
                 setupChannels();
@@ -660,18 +642,18 @@
 
             if (config === '4-channel') {
                 channelStructure = {
-                    'channel-1': { name: 'Canal 1 (Stereo L)', speakers: [], mode: 'parallel', finalImp: 0 },
-                    'channel-2': { name: 'Canal 2 (Stereo R)', speakers: [], mode: 'parallel', finalImp: 0 },
+                    'channel-1': { name: 'Canal 1 (Stereo L)', speakers: [], mode: 'direct', finalImp: 0 },
+                    'channel-2': { name: 'Canal 2 (Stereo R)', speakers: [], mode: 'direct', finalImp: 0 },
                     'channel-3-4': { name: 'Canais 3 & 4 (Bridge)', speakers: [], mode: 'bridge', finalImp: 0 }
                 };
             } else if (config === 'mono-stereo') {
                 channelStructure = {
                     'channel-mono': { name: 'Módulo 1: Monobloco', speakers: [], mode: 'parallel', finalImp: 0 },
-                    'channel-stereo-1': { name: 'Módulo 2: Stereo Voz', speakers: [], mode: 'parallel', finalImp: 0 }
+                    'channel-stereo-1': { name: 'Módulo 2: Stereo Voz', speakers: [], mode: 'direct', finalImp: 0 }
                 };
             } else if (config === '1-channel') {
                 channelStructure = {
-                    'channel-mono': { name: 'Canal Único Monobloco', speakers: [], mode: 'parallel', finalImp: 0 }
+                    'channel-mono': { name: 'Canal Único Monobloco', speakers: [], mode: 'direct', finalImp: 0 }
                 };
             }
 
@@ -699,7 +681,6 @@
 
         function calculateSystem() {
             const voltage = parseFloat(document.getElementById('sysVoltage').value);
-            const ampMinImp = parseFloat(document.getElementById('ampMinImp').value);
             let totalPower = 0;
 
             const allocDiv = document.getElementById('channelsAllocated');
@@ -721,18 +702,21 @@
                         totalQty += s.qty;
                     });
 
-                    if (ch.mode === 'parallel') chImpedance = baseImp / totalQty;
+                    if (ch.mode === 'direct') chImpedance = baseImp;
+                    else if (ch.mode === 'parallel') chImpedance = baseImp / totalQty;
                     else if (ch.mode === 'series') chImpedance = baseImp * totalQty;
                     else if (ch.mode === 'bridge') chImpedance = baseImp / totalQty;
 
                     ch.finalImp = chImpedance;
 
                     const recommendedSpeakerCable = chPower > 1000 ? "4.0 mm² Cobre" : (chPower > 400 ? "2.5 mm² Cobre" : "1.5 mm² Polarizado");
+                    const modeLabel = ch.mode === 'direct' ? 'CANAL ÚNICO' : ch.mode.toUpperCase();
+
                     tableBody.innerHTML += `
                         <tr>
                             <td><strong>${ch.speakers[0].name}</strong> (${totalQty}x)</td>
                             <td><span style="color:var(--accent-cyan); font-weight:bold;">${recommendedSpeakerCable}</span></td>
-                            <td>${ch.mode.toUpperCase()} (${chImpedance.toFixed(1)} Ω)</td>
+                            <td>${modeLabel} (${chImpedance.toFixed(1)} Ω)</td>
                         </tr>
                     `;
                 }
@@ -794,7 +778,6 @@
 
             const midY = h / 2;
             
-            // Desenhar Bateria e Módulo
             drawBox(ctx, 15, midY - 25, 60, 50, '#0f131d', '#ff5500', 'BAT', '60Ah');
             drawWire(ctx, 75, midY, 140, midY, '#ff3333', 3);
             ctx.fillStyle = '#00f0ff'; ctx.font = '9px Rajdhani';
@@ -802,7 +785,6 @@
 
             drawBox(ctx, 140, midY - 40, 100, 80, '#090d14', '#ff5500', 'AMPLIFICADOR', `${totalPower}W`);
 
-            // Canais de Saída
             let chY = midY - 20;
             const outX = 240;
 
