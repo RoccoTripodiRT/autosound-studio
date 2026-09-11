@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AutoSound Mobile Studio - Engenharia de Som Automotivo</title>
+    <title>AutoSound Studio Pro V6 - Engenharia de Som Automotivo</title>
     
     <!-- Meta tags para PWA e Mobile -->
     <meta name="theme-color" content="#07090e">
@@ -11,10 +11,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="AutoSound">
     
-    <!-- Web App Manifest Embutido via Data URI -->
+    <!-- Manifest PWA Embutido -->
     <link rel="manifest" href='data:application/manifest+json,{"name":"AutoSound Studio Pro","short_name":"AutoSound","start_url":".","display":"standalone","background_color":"#07090e","theme_color":"#07090e","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/3204/3204062.png","sizes":"512x512","type":"image/png"}]}'>
 
-    <!-- Fontes e Ícones -->
+    <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -28,6 +28,7 @@
             --accent-cyan: #00f0ff;
             --accent-green: #00ff88;
             --accent-red: #ff2a5f;
+            --accent-purple: #ab47bc;
             --text-main: #f0f4f8;
             --text-muted: #8290a0;
             --card-inner: #0f131d;
@@ -58,9 +59,7 @@
             letter-spacing: 1px;
         }
 
-        .brand-title {
-            font-family: 'Orbitron', sans-serif;
-        }
+        .brand-title { font-family: 'Orbitron', sans-serif; }
 
         header {
             background: rgba(10, 13, 20, 0.95);
@@ -89,12 +88,7 @@
             filter: drop-shadow(0 0 8px var(--accent-orange-glow));
         }
 
-        .brand h1 {
-            font-size: 1.4rem;
-            font-weight: 900;
-            color: #fff;
-        }
-
+        .brand h1 { font-size: 1.4rem; font-weight: 900; color: #fff; }
         .brand h1 span { color: var(--accent-orange); }
 
         .btn-install {
@@ -117,11 +111,11 @@
             margin: 15px auto;
             padding: 0 15px;
             display: grid;
-            grid-template-columns: 420px 1fr 380px;
+            grid-template-columns: 420px 1fr 400px;
             gap: 18px;
         }
 
-        @media (max-width: 1400px) {
+        @media (max-width: 1500px) {
             .workspace { grid-template-columns: 380px 1fr; }
             .catalog-panel { grid-column: 1 / -1; }
         }
@@ -279,7 +273,7 @@
             border-collapse: collapse;
             font-size: 0.78rem;
             text-align: left;
-            min-width: 400px;
+            min-width: 480px;
         }
 
         table.wiring-table th {
@@ -312,7 +306,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            max-height: 600px;
+            max-height: 650px;
             overflow-y: auto;
         }
 
@@ -326,7 +320,10 @@
             align-items: center;
             text-decoration: none;
             color: inherit;
+            transition: border-color 0.2s;
         }
+
+        .product-card:hover { border-color: var(--accent-cyan); }
 
         .product-icon {
             width: 38px;
@@ -382,9 +379,20 @@
             font-size: 0.78rem;
             display: flex;
             justify-content: space-between;
+            align-items: center;
             padding: 4px 0;
             border-bottom: 1px dashed rgba(255,255,255,0.05);
         }
+
+        .btn-remove {
+            color: var(--accent-red);
+            cursor: pointer;
+            padding: 2px 6px;
+            font-size: 0.9rem;
+            border-radius: 4px;
+        }
+
+        .btn-remove:hover { background: rgba(255, 42, 95, 0.2); }
     </style>
 </head>
 <body>
@@ -393,7 +401,7 @@
         <div class="brand">
             <i class="fa-solid fa-sliders"></i>
             <div>
-                <h1 class="brand-title">AUTOSOUND <span>MOBILE</span></h1>
+                <h1 class="brand-title">AUTOSOUND <span>STUDIO V6</span></h1>
             </div>
         </div>
         <button id="installPwaBtn" class="btn-install">
@@ -403,7 +411,7 @@
 
     <div class="workspace">
         
-        <!-- CONFIGURAÇÕES -->
+        <!-- PAINEL DA ESQUERDA -->
         <div class="panel">
             <div class="panel-header">
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
@@ -411,7 +419,7 @@
             </div>
             
             <div class="preset-buttons">
-                <div class="btn-preset" onclick="loadPreset('sq_interno')">🔊 Interno</div>
+                <div class="btn-preset" onclick="loadPreset('sq_interno')">🔊 Som Interno</div>
                 <div class="btn-preset" onclick="loadPreset('trio_médio')">🎺 Trio Mala</div>
                 <div class="btn-preset" onclick="loadPreset('paredao_heavy')">🔊 Paredão</div>
             </div>
@@ -516,11 +524,11 @@
             <div id="channelsAllocated"></div>
         </div>
 
-        <!-- MÉTRICAS E CANVAS -->
+        <!-- PAINEL CENTRAL -->
         <div class="panel">
             <div class="panel-header">
                 <i class="fa-solid fa-chart-pie"></i>
-                <h2>4. Cargas Elétricas & Fiação</h2>
+                <h2>4. Cargas Elétricas & Fiação de Força / Áudio</h2>
             </div>
 
             <div class="metrics-grid">
@@ -537,8 +545,9 @@
                     <div class="metric-val" id="valMusicAmps">0 A</div>
                 </div>
                 <div class="metric-card green">
-                    <div class="metric-lbl">Cabo Força</div>
+                    <div class="metric-lbl">Cabo Alimentação</div>
                     <div class="metric-val" id="valPowerCable">0 mm²</div>
+                    <div class="metric-lbl" id="valPowerAwg">0 AWG</div>
                 </div>
             </div>
 
@@ -546,9 +555,10 @@
                 <table class="wiring-table">
                     <thead>
                         <tr>
-                            <th>Falante</th>
+                            <th>Falante / Via</th>
                             <th>Fiação Recomendada</th>
-                            <th>Ligação</th>
+                            <th>Bitola AWG</th>
+                            <th>Esquema / Impedância</th>
                         </tr>
                     </thead>
                     <tbody id="wiringTableBody"></tbody>
@@ -565,11 +575,11 @@
             </div>
         </div>
 
-        <!-- DIREITA: PRODUTOS DO MERCADO -->
+        <!-- PAINEL DA DIREITA: PRODUTOS COMPLETOS DO MERCADO -->
         <div class="panel catalog-panel">
             <div class="panel-header">
                 <i class="fa-solid fa-boxes-packing"></i>
-                <h2>6. Fabricantes Recomendados</h2>
+                <h2>6. Fabricantes & Equipamentos Recomendados</h2>
             </div>
             <div class="products-grid" id="productsCatalog"></div>
         </div>
@@ -679,6 +689,13 @@
             }
         }
 
+        function removeSpeakerFromChannel(chKey, index) {
+            if (channelStructure[chKey]) {
+                channelStructure[chKey].speakers.splice(index, 1);
+                calculateSystem();
+            }
+        }
+
         function calculateSystem() {
             const voltage = parseFloat(document.getElementById('sysVoltage').value);
             let totalPower = 0;
@@ -709,13 +726,18 @@
 
                     ch.finalImp = chImpedance;
 
-                    const recommendedSpeakerCable = chPower > 1000 ? "4.0 mm² Cobre" : (chPower > 400 ? "2.5 mm² Cobre" : "1.5 mm² Polarizado");
+                    let cableMM = "1.5 mm²";
+                    let cableAWG = "15 AWG";
+                    if (chPower > 1000) { cableMM = "4.0 mm² Cobre"; cableAWG = "11 AWG"; }
+                    else if (chPower > 400) { cableMM = "2.5 mm² Cobre"; cableAWG = "13 AWG"; }
+
                     const modeLabel = ch.mode === 'direct' ? 'CANAL ÚNICO' : ch.mode.toUpperCase();
 
                     tableBody.innerHTML += `
                         <tr>
                             <td><strong>${ch.speakers[0].name}</strong> (${totalQty}x)</td>
-                            <td><span style="color:var(--accent-cyan); font-weight:bold;">${recommendedSpeakerCable}</span></td>
+                            <td><span style="color:var(--accent-cyan); font-weight:bold;">${cableMM}</span></td>
+                            <td>${cableAWG}</td>
                             <td>${modeLabel} (${chImpedance.toFixed(1)} Ω)</td>
                         </tr>
                     `;
@@ -724,8 +746,13 @@
                 totalPower += chPower;
 
                 let speakerListHTML = '';
-                ch.speakers.forEach((s) => {
-                    speakerListHTML += `<div class="channel-speaker-item"><span>${s.qty}x ${s.name} (${s.power}W RMS)</span></div>`;
+                ch.speakers.forEach((s, idx) => {
+                    speakerListHTML += `
+                        <div class="channel-speaker-item">
+                            <span>${s.qty}x ${s.name} (${s.power}W RMS)</span>
+                            <i class="fa-solid fa-trash btn-remove" title="Remover falante" onclick="removeSpeakerFromChannel('${chKey}', ${idx})"></i>
+                        </div>
+                    `;
                 });
 
                 allocDiv.innerHTML += `
@@ -734,7 +761,7 @@
                             <span>${ch.name}</span>
                             <span>${chImpedance.toFixed(1)} Ω</span>
                         </div>
-                        ${speakerListHTML}
+                        ${speakerListHTML.length > 0 ? speakerListHTML : '<div style="font-size:0.75rem; color:var(--text-muted)">Nenhum falante conectado.</div>'}
                     </div>
                 `;
             }
@@ -744,21 +771,23 @@
             const musicalAmps = maxAmps * 0.50;
 
             let cableGauge = 0;
+            let cableAwgPower = "10 AWG";
             if (maxAmps > 0) {
                 const deltaV = voltage * 0.03;
                 const exactGauge = (2 * 4.5 * maxAmps * 0.0175) / deltaV;
-                if (exactGauge <= 6) cableGauge = 6;
-                else if (exactGauge <= 10) cableGauge = 10;
-                else if (exactGauge <= 16) cableGauge = 16;
-                else if (exactGauge <= 21) cableGauge = 21;
-                else if (exactGauge <= 35) cableGauge = 35;
-                else cableGauge = 50;
+                if (exactGauge <= 6) { cableGauge = 6; cableAwgPower = "9 AWG"; }
+                else if (exactGauge <= 10) { cableGauge = 10; cableAwgPower = "7 AWG"; }
+                else if (exactGauge <= 16) { cableGauge = 16; cableAwgPower = "5 AWG"; }
+                else if (exactGauge <= 21) { cableGauge = 21; cableAwgPower = "4 AWG"; }
+                else if (exactGauge <= 35) { cableGauge = 35; cableAwgPower = "2 AWG"; }
+                else { cableGauge = 50; cableAwgPower = "0 AWG"; }
             }
 
             document.getElementById('valTotalPower').innerText = `${totalPower.toLocaleString()} W`;
             document.getElementById('valMaxAmps').innerText = `${maxAmps.toFixed(1)} A`;
             document.getElementById('valMusicAmps').innerText = `${musicalAmps.toFixed(1)} A`;
             document.getElementById('valPowerCable').innerText = `${cableGauge} mm²`;
+            document.getElementById('valPowerAwg').innerText = cableAwgPower;
 
             drawSchematicCanvas(totalPower, cableGauge);
             renderProducts(totalPower);
@@ -820,13 +849,19 @@
 
             if (power <= 1200) {
                 products = [
-                    { name: 'Taramps TS 400x4', brand: 'Taramps', url: 'https://www.taramps.com.br', spec: '4 Canais 100W RMS @ 2Ω', icon: 'fa-bolt' },
-                    { name: 'Pioneer TS-W312S4 12"', brand: 'Pioneer', url: 'https://www.pioneer.com.br', spec: 'Subwoofer 500W RMS', icon: 'fa-bullhorn' }
+                    { name: 'Pioneer DMH-Z5380TV', brand: 'Pioneer', url: 'https://www.pioneer.com.br', spec: 'Central Multimídia RCA 4V', cat: 'Player / Multimídia', icon: 'fa-tv' },
+                    { name: 'Taramps TS 400x4', brand: 'Taramps', url: 'https://www.taramps.com.br', spec: '4 Canais 100W RMS @ 2Ω', cat: 'Amplificador', icon: 'fa-bolt' },
+                    { name: 'Pioneer TS-W312S4 12"', brand: 'Pioneer', url: 'https://www.pioneer.com.br', spec: 'Subwoofer 500W RMS', cat: 'Subwoofer', icon: 'fa-bullhorn' },
+                    { name: 'Technoise Cabo Cobre 16mm²', brand: 'Technoise', url: 'https://www.technoise.com.br', spec: 'Cabo Alimentação 100% Cobre', cat: 'Cabeamento Força', icon: 'fa-plug' },
+                    { name: 'Technoise Cabo RCA 5m', brand: 'Technoise', url: 'https://www.technoise.com.br', spec: 'Blindagem Dupla de Sinal', cat: 'Cabeamento Áudio', icon: 'fa-wire-group' }
                 ];
             } else {
                 products = [
-                    { name: 'Soundigital SD 3000.1', brand: 'Soundigital', url: 'https://soundigital.com.br', spec: '3000W RMS Monobloco', icon: 'fa-bolt' },
-                    { name: 'Eros Target Bass 3.0K', brand: 'Eros', url: 'https://www.eros.com.br', spec: '1500W RMS Woofer 15"', icon: 'fa-bullhorn' }
+                    { name: 'Stetsom STX2448 DSP', brand: 'Stetsom', url: 'https://www.stetsom.com.br', spec: 'Processador Digital 6 Canais', cat: 'Processador DSP', icon: 'fa-sliders' },
+                    { name: 'Soundigital SD 3000.1', brand: 'Soundigital', url: 'https://soundigital.com.br', spec: '3000W RMS Monobloco @ 1Ω / 2Ω', cat: 'Amplificador Mono', icon: 'fa-bolt' },
+                    { name: 'Eros Target Bass 3.0K', brand: 'Eros', url: 'https://www.eros.com.br', spec: '1500W RMS Woofer 15"', cat: 'Woofer Trio', icon: 'fa-bullhorn' },
+                    { name: 'Usina 120A Smart Bivolt', brand: 'Usina Spark', url: 'https://www.sparkpower.com.br', spec: 'Fonte Automotiva com Voltímetro', cat: 'Alimentação', icon: 'fa-charging-station' },
+                    { name: 'Technoise Cabo Cobre 35mm²', brand: 'Technoise', url: 'https://www.technoise.com.br', spec: 'Cabo Flexível de Alta Condutividade', cat: 'Cabeamento Força', icon: 'fa-plug' }
                 ];
             }
 
@@ -837,7 +872,7 @@
                         <div>
                             <div class="product-name"><span>${p.name}</span> <i class="fa-solid fa-external-link" style="font-size:0.7rem; color:var(--accent-cyan)"></i></div>
                             <div class="product-spec">${p.spec}</div>
-                            <span class="product-tag">${p.brand}</span>
+                            <span class="product-tag">${p.cat} (${p.brand})</span>
                         </div>
                     </a>
                 `;
