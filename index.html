@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AutoSound Studio V13 - Gráficos PNG Reais</title>
+    <title>AutoSound Studio V14 - Diagrama Infográfico Técnico</title>
     
     <meta name="theme-color" content="#07090e">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="AutoSound">
     
-    <link rel="manifest" href='data:application/manifest+json,{"name":"AutoSound Studio V13","short_name":"AutoSound","start_url":".","display":"standalone","background_color":"#07090e","theme_color":"#07090e","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/3204/3204062.png","sizes":"512x512","type":"image/png"}]}'>
+    <link rel="manifest" href='data:application/manifest+json,{"name":"AutoSound Studio V14","short_name":"AutoSound","start_url":".","display":"standalone","background_color":"#07090e","theme_color":"#07090e","icons":[{"src":"https://cdn-icons-png.flaticon.com/512/3204/3204062.png","sizes":"512x512","type":"image/png"}]}'>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -119,10 +119,10 @@
         table.wiring-table td { padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.03); }
 
         .canvas-container {
-            position: relative; background: #030407; border-radius: 12px;
+            position: relative; background: #07090e; border-radius: 12px;
             border: 1px solid var(--panel-border); overflow: hidden;
-            width: 100%; height: 520px;
-            box-shadow: inset 0 0 30px rgba(0,0,0,0.8);
+            width: 100%; height: 620px;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.9);
         }
 
         canvas { width: 100% !important; height: 100% !important; }
@@ -148,11 +148,11 @@
         <div class="brand">
             <i class="fa-solid fa-sliders"></i>
             <div>
-                <h1 class="brand-title">AUTOSOUND <span>STUDIO V13</span></h1>
+                <h1 class="brand-title">AUTOSOUND <span>STUDIO V14</span></h1>
             </div>
         </div>
         <div style="font-size: 0.85rem; color: var(--accent-cyan);" class="tech-font">
-            <i class="fa-solid fa-image"></i> Diagrama Gráfico com Imagens PNG Profissionais
+            <i class="fa-solid fa-diagram-project"></i> Infográfico Técnico Estilo Esquema Real
         </div>
     </header>
 
@@ -214,7 +214,6 @@
                 </div>
             </div>
 
-            <!-- SETOR 3 -->
             <div class="panel-header" style="margin-top: 5px;">
                 <i class="fa-solid fa-plug-circle-plus"></i>
                 <h2>3. Atribuir Equipamento(s) ao Canal</h2>
@@ -351,7 +350,7 @@
 
             <div class="panel-header" style="margin-top: 5px;">
                 <i class="fa-solid fa-image"></i>
-                <h2>5. Diagrama Gráfico com Imagens Reais (PNG)</h2>
+                <h2>5. Infográfico Técnico de Instalação (Estilo Esquema Real)</h2>
             </div>
 
             <div class="canvas-container">
@@ -373,46 +372,7 @@
     <script>
         let channelStructure = {};
 
-        // IMAGENS PNG REAIS (CARREGADAS VIA URL TRANSPARENTE)
-        const pngImages = {
-            player: new Image(),
-            battery: new Image(),
-            fuse: new Image(),
-            amplifier: new Image(),
-            subwoofer: new Image(),
-            speaker: new Image()
-        };
-
-        let imagesLoaded = false;
-
-        function preloadImages() {
-            let loadedCount = 0;
-            const totalImages = 6;
-
-            function checkAllLoaded() {
-                loadedCount++;
-                if (loadedCount === totalImages) {
-                    imagesLoaded = true;
-                    calculateSystem();
-                }
-            }
-
-            // Usando ícones PNG limpos e transparentes de alta qualidade
-            pngImages.player.src = "https://cdn-icons-png.flaticon.com/512/2965/2965567.png"; // Multimídia / Player
-            pngImages.battery.src = "https://cdn-icons-png.flaticon.com/512/1048/1048954.png"; // Bateria
-            pngImages.fuse.src = "https://cdn-icons-png.flaticon.com/512/2816/2816856.png"; // Fusível / Proteção
-            pngImages.amplifier.src = "https://cdn-icons-png.flaticon.com/512/3204/3204062.png"; // Módulo Amplificador
-            pngImages.subwoofer.src = "https://cdn-icons-png.flaticon.com/512/3659/3659898.png"; // Subwoofer
-            pngImages.speaker.src = "https://cdn-icons-png.flaticon.com/512/1077/1077012.png"; // Alto-falante / Kit 2 Vias
-
-            for (let key in pngImages) {
-                pngImages[key].onload = checkAllLoaded;
-                pngImages[key].onerror = checkAllLoaded; // Evita travar se falhar a rede
-            }
-        }
-
         window.onload = function() {
-            preloadImages();
             setupChannels();
             loadPreset('sq_interno');
             window.addEventListener('resize', calculateSystem);
@@ -642,12 +602,12 @@
             document.getElementById('valFuse').innerText = fuseRating > 0 ? `${fuseRating} A (ANL)` : '0 A';
             document.getElementById('valAuxBattery').innerText = auxBatteryAh > 0 ? `${auxBatteryAh} Ah AGM` : 'Cofre OK';
 
-            drawPngCanvasV13(totalPower, cableGauge, cableAwgPower, fuseRating, auxBatteryAh);
+            drawInfographicCanvasV14(totalPower, cableGauge, cableAwgPower, fuseRating, auxBatteryAh);
             renderProducts(totalPower);
         }
 
-        /* RENDERIZADOR COM IMAGENS PNG REAIS NO CANVAS */
-        function drawPngCanvasV13(totalPower, cableGauge, cableAwgPower, fuseRating, auxBattery) {
+        /* INFOGRÁFICO ESTILO ESQUEMA TÉCNICO EXATAMENTE COMO A REFERÊNCIA */
+        function drawInfographicCanvasV14(totalPower, cableGauge, cableAwgPower, fuseRating, auxBattery) {
             const canvas = document.getElementById('wiringCanvas');
             const ctx = canvas.getContext('2d');
             canvas.width = canvas.parentElement.clientWidth;
@@ -660,109 +620,147 @@
             if (totalPower === 0) {
                 ctx.fillStyle = '#8290a0';
                 ctx.font = '14px Rajdhani';
-                ctx.fillText('Adicione equipamentos nos canais para gerar o diagrama gráfico em PNG.', w / 2 - 240, h / 2);
+                ctx.fillText('Adicione equipamentos nos canais para desenhar o infográfico de instalação.', w / 2 - 250, h / 2);
                 return;
             }
 
-            // 1. Player / Central com Imagem PNG
-            drawImageNode(ctx, pngImages.player, 25, 30, 55, 55, 'CENTRAL / DSP', '#00f0ff');
+            // --- 1. BLOCO BATERIA (SUPERIOR ESQUERDO) ---
+            drawInfographicBox(ctx, 30, 30, 140, 75, '#121722', '#ff5500', 'BATERIA (12V / 60Ah)');
+            // Terminais + (Vermelho) e - (Azul)
+            ctx.fillStyle = '#ff2a5f'; ctx.fillRect(45, 22, 14, 8);
+            ctx.fillStyle = '#00f0ff'; ctx.fillRect(140, 22, 14, 8);
+            ctx.fillStyle = '#fff'; ctx.font = 'bold 9px Inter';
+            ctx.fillText('(+)', 48, 18); ctx.fillText('(-)', 143, 18);
 
-            // 2. Bateria Principal
-            drawImageNode(ctx, pngImages.battery, 25, 190, 60, 60, 'BAT COFRE (60Ah)', '#ff5500');
+            // Aterramento do Chassi da Bateria
+            ctx.strokeStyle = '#00f0ff'; ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.moveTo(100, 105); ctx.lineTo(100, 135); ctx.stroke();
+            drawChassisGround(ctx, 100, 135);
+            ctx.fillStyle = '#00f0ff'; ctx.font = '8.5px Rajdhani';
+            ctx.fillText('ATERRAMENTO DO CHASSI', 45, 150);
 
-            // 3. Fusível ANL
-            drawImageNode(ctx, pngImages.fuse, 155, 195, 50, 50, `${fuseRating}A ANL`, '#ffb300');
-            drawLabeledCable(ctx, 85, 220, 155, 220, '#ff2a5f', 4, `+${cableGauge}mm² (${cableAwgPower})`);
+            // --- 2. CABO POSITIVO COM FUSÍVEL ATÉ O PLAYER ---
+            // Vermelho saindo do polo + da bateria
+            ctx.strokeStyle = '#ff2a5f'; ctx.lineWidth = 4;
+            ctx.beginPath(); ctx.moveTo(52, 22); ctx.lineTo(52, 15); ctx.lineTo(210, 15); ctx.lineTo(210, 67); ctx.stroke();
+            
+            // Caixa do Fusível ANL
+            ctx.fillStyle = '#1c2230'; ctx.fillRect(180, 52, 60, 32);
+            ctx.strokeStyle = '#ffb300'; ctx.lineWidth = 2; ctx.strokeRect(180, 52, 60, 32);
+            ctx.fillStyle = '#ffb300'; ctx.font = 'bold 9px Orbitron'; ctx.textAlign = 'center';
+            ctx.fillText(`${fuseRating}A`, 210, 72); ctx.textAlign = 'left';
+            ctx.fillStyle = '#fff'; ctx.font = '8px Rajdhani';
+            ctx.fillText('FUSÍVEL', 190, 95);
 
-            let lastPowerX = 215;
+            // --- 3. UNIDADE PRINCIPAL / PLAYER ---
+            drawInfographicBox(ctx, 280, 30, 240, 75, '#121722', '#00f0ff', 'UNIDADE PRINCIPAL (RECEPTOR)');
+            ctx.fillStyle = '#00f0ff'; ctx.font = '8.5px Rajdhani';
+            ctx.fillText('Rádio / Multimídia RCA Out', 330, 78);
 
-            // 4. Bateria Auxiliar AGM (Se houver)
-            if (auxBattery > 0) {
-                drawLabeledCable(ctx, lastPowerX, 220, lastPowerX + 45, 220, '#ff2a5f', 4, `+${cableGauge}mm²`);
-                lastPowerX += 45;
-                drawImageNode(ctx, pngImages.battery, lastPowerX, 190, 60, 60, `AGM (${auxBattery}Ah)`, '#00ff88');
-                lastPowerX += 60;
-            }
+            // --- 4. CABOS RCA (ÁUDIO) E REMOTE ---
+            // RCA Esquerdo e Direito (Vermelho e Branco) descendo para o amplificador
+            ctx.strokeStyle = '#ff2a5f'; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(370, 105); ctx.lineTo(370, 210); ctx.stroke();
+            ctx.strokeStyle = '#fff'; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(420, 105); ctx.lineTo(420, 210); ctx.stroke();
+            ctx.fillStyle = '#00f0ff'; ctx.font = '8px Rajdhani';
+            ctx.fillText('SAÍDA RCA (SINAL DE ÁUDIO)', 340, 150);
 
-            let activeAmps = {};
+            // Cabo Remote (Azul)
+            ctx.strokeStyle = '#00f0ff'; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(300, 105); ctx.lineTo(300, 210); ctx.stroke();
+            ctx.fillStyle = '#00f0ff'; ctx.font = '8px Rajdhani';
+            ctx.fillText('REMOTE', 260, 180);
+
+            // --- 5. AMPLIFICADOR DE POTÊNCIA ---
+            drawInfographicBox(ctx, 250, 210, 300, 85, '#121722', '#ff5500', 'AMPLIFICADOR (POTÊNCIA)');
+            ctx.fillStyle = '#fff'; ctx.font = 'bold 9px Rajdhani';
+            ctx.textAlign = 'center';
+            ctx.fillText(`Alimentação: +${cableGauge}mm² (${cableAwgPower})`, 400, 275);
+            ctx.textAlign = 'left';
+
+            // Aterramento do Amplificador
+            ctx.strokeStyle = '#00f0ff'; ctx.lineWidth = 3;
+            ctx.beginPath(); ctx.moveTo(280, 295); ctx.lineTo(280, 335); ctx.stroke();
+            drawChassisGround(ctx, 280, 335);
+            ctx.fillStyle = '#00f0ff'; ctx.font = '8.5px Rajdhani';
+            ctx.fillText('ATERRAMENTO', 240, 355);
+
+            // --- 6. SAÍDAS PARA OS ALTO-FALANTES ---
+            let activeChannels = [];
             for (let chKey in channelStructure) {
                 const ch = channelStructure[chKey];
-                if (ch.groups.length > 0) {
-                    if (!activeAmps[ch.ampName]) activeAmps[ch.ampName] = [];
-                    activeAmps[ch.ampName].push(ch);
-                }
+                if (ch.groups.length > 0) activeChannels.push(ch);
             }
 
-            let ampY = 60;
-            let ampX = lastPowerX + 50;
-            drawLabeledCable(ctx, lastPowerX, 220, ampX, 220, '#ff2a5f', 4, `Linha Principal (+${cableGauge}mm²)`);
+            let startX = 120;
+            let spacingX = Math.max(160, Math.floor(650 / Math.max(1, activeChannels.length)));
+            let spkY = 440;
 
-            for (let ampTitle in activeAmps) {
-                // Amplificador com Imagem PNG
-                drawImageNode(ctx, pngImages.amplifier, ampX, ampY, 75, 75, ampTitle, '#ff5500');
+            activeChannels.forEach((ch, idx) => {
+                let curX = startX + (idx * spacingX);
+                let g = ch.groups[0];
+                let label = g ? g.items[0].name.split('(')[0] : 'Alto-Falante';
+                let impVal = g ? g.finalImp.toFixed(1) : '4.0';
 
-                // Cabo RCA da Central ao Módulo
-                drawLabeledCable(ctx, 80, 57, ampX, ampY + 35, '#00f0ff', 2, 'RCA 5m');
+                // Fiação do Amplificador até o Falante
+                ctx.strokeStyle = '#00ff88'; ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                ctx.moveTo(320 + (idx * 40), 295);
+                ctx.lineTo(320 + (idx * 40), spkY - 20);
+                ctx.lineTo(curX + 45, spkY - 20);
+                ctx.lineTo(curX + 45, spkY);
+                ctx.stroke();
 
-                let spkY = ampY + 10;
-                const outX = ampX + 75;
+                // Desenho do Alto-Falante (Círculo Estilizado com Cone)
+                ctx.fillStyle = '#121722'; ctx.beginPath(); ctx.arc(curX + 45, spkY + 30, 35, 0, Math.PI * 2); ctx.fill();
+                ctx.strokeStyle = '#00f0ff'; ctx.lineWidth = 2; ctx.stroke();
+                ctx.fillStyle = '#00f0ff'; ctx.beginPath(); ctx.arc(curX + 45, spkY + 30, 12, 0, Math.PI * 2); ctx.fill();
 
-                activeAmps[ampTitle].forEach(ch => {
-                    ch.groups.forEach(g => {
-                        let spkCableText = "1.5mm² (15 AWG)";
-                        if (g.totalPower > 1000) spkCableText = "4.0mm² (11 AWG)";
-                        else if (g.totalPower > 400) spkCableText = "2.5mm² (13 AWG)";
+                // Ondas Sonoras ao Redor do Falante
+                ctx.strokeStyle = 'rgba(0, 240, 255, 0.4)'; ctx.lineWidth = 1.5;
+                ctx.beginPath(); ctx.arc(curX + 45, spkY + 30, 44, -Math.PI/3, Math.PI/3); ctx.stroke();
+                ctx.beginPath(); ctx.arc(curX + 45, spkY + 30, 52, -Math.PI/3, Math.PI/3); ctx.stroke();
 
-                        drawLabeledCable(ctx, outX, spkY + 30, outX + 75, spkY + 30, '#00ff88', 2, spkCableText);
+                // Legenda do Falante
+                ctx.fillStyle = '#fff'; ctx.font = 'bold 9px Rajdhani'; ctx.textAlign = 'center';
+                ctx.fillText(label.substring(0, 18), curX + 45, spkY + 82);
+                ctx.fillStyle = '#00ff88'; ctx.font = 'bold 9px Orbitron';
+                ctx.fillText(`Carga: ${impVal}Ω`, curX + 45, spkY + 96);
+                ctx.textAlign = 'left';
+            });
 
-                        let firstItemName = g.items[0].name.toLowerCase();
-                        let targetImg = firstItemName.includes('subwoofer') ? pngImages.subwoofer : pngImages.speaker;
-                        let labelSummary = g.items.map(i => i.name.split('(')[0]).join(' + ');
-
-                        // Alto-falante / Subwoofer com Imagem PNG
-                        drawImageNode(ctx, targetImg, outX + 75, spkY, 65, 65, `${labelSummary} (${g.finalImp.toFixed(1)}Ω)`, '#00f0ff');
-
-                        spkY += 75;
-                    });
-                });
-
-                ampY += 160;
-            }
+            // --- 7. LEGENDA TÉCNICA DE CORES NO RODAPÉ ---
+            drawInfographicLegend(ctx, 20, h - 45, w - 40);
         }
 
-        function drawImageNode(ctx, imgObj, x, y, w, h, label, borderColor) {
-            ctx.fillStyle = '#0f131d';
-            ctx.fillRect(x, y, w, h);
-            ctx.strokeStyle = borderColor;
-            ctx.lineWidth = 1.5;
-            ctx.strokeRect(x, y, w, h);
-
-            if (imagesLoaded && imgObj.complete && imgObj.naturalWidth !== 0) {
-                ctx.drawImage(imgObj, x + 8, y + 6, w - 16, h - 22);
-            }
-
-            ctx.fillStyle = '#fff';
-            ctx.font = 'bold 8px Rajdhani';
-            ctx.textAlign = 'center';
-            ctx.fillText(label.substring(0, 18), x + w / 2, y + h - 4);
+        function drawInfographicBox(ctx, x, y, w, h, bgColor, borderColor, title) {
+            ctx.fillStyle = bgColor; ctx.fillRect(x, y, w, h);
+            ctx.strokeStyle = borderColor; ctx.lineWidth = 2; ctx.strokeRect(x, y, w, h);
+            ctx.fillStyle = '#fff'; ctx.font = 'bold 11px Orbitron'; ctx.textAlign = 'center';
+            ctx.fillText(title, x + w / 2, y + h / 2 + 4);
             ctx.textAlign = 'left';
         }
 
-        function drawLabeledCable(ctx, x1, y1, x2, y2, color, width, labelText) {
-            ctx.strokeStyle = color; ctx.lineWidth = width;
-            ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+        function drawChassisGround(ctx, x, y) {
+            ctx.strokeStyle = '#00f0ff'; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(x - 15, y); ctx.lineTo(x + 15, y); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(x - 10, y + 5); ctx.lineTo(x + 10, y + 5); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(x - 5, y + 10); ctx.lineTo(x + 5, y + 10); ctx.stroke();
+        }
 
-            const midX = (x1 + x2) / 2;
-            const midY = (y1 + y2) / 2;
-            
-            ctx.fillStyle = '#07090e';
-            ctx.fillRect(midX - 48, midY - 9, 96, 15);
-            ctx.strokeStyle = color; ctx.lineWidth = 1;
-            ctx.strokeRect(midX - 48, midY - 9, 96, 15);
+        function drawInfographicLegend(ctx, x, y, w) {
+            ctx.fillStyle = 'rgba(15, 19, 29, 0.9)'; ctx.fillRect(x, y, w, 38);
+            ctx.strokeStyle = '#1e2536'; ctx.lineWidth = 1; ctx.strokeRect(x, y, w, 38);
 
-            ctx.fillStyle = '#fff'; ctx.font = 'bold 7.5px Rajdhani'; ctx.textAlign = 'center';
-            ctx.fillText(labelText, midX, midY + 3);
-            ctx.textAlign = 'left';
+            ctx.fillStyle = '#ff2a5f'; ctx.fillRect(x + 15, y + 15, 12, 6);
+            ctx.fillStyle = '#fff'; ctx.font = '8px Rajdhani'; ctx.fillText('Alimentação (+12V)', x + 32, y + 21);
+
+            ctx.fillStyle = '#00f0ff'; ctx.fillRect(x + 150, y + 15, 12, 6);
+            ctx.fillStyle = '#fff'; ctx.fillText('Aterramento / Remote', x + 167, y + 21);
+
+            ctx.fillStyle = '#00ff88'; ctx.fillRect(x + 300, y + 15, 12, 6);
+            ctx.fillStyle = '#fff'; ctx.fillText('Saída Amplificada (Falantes)', x + 317, y + 21);
         }
 
         function renderProducts(power) {
